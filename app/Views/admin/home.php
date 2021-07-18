@@ -1,23 +1,17 @@
 <?= $this->extend('templates/admin') ?>
 <?= $this->section('content') ?>
-<section class="main_full banner_section_top">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="full">
-                <div class="slider_banner">
-                    <img class="img-responsive"
-                        style="opacity: 0.6; position: relative; margin:20px 0; border-radius:  50% / 10%;"
-                        src="<?= site_url('assets/images/slider_img.jpg') ?>" alt="#" />
-                    <div class="slide_cont">
-                        <div style="color: #000" class="slider_cont_inner">
-                            <h3>Selamat Datang di</h3>
-                            <h3>Web E-Learning</h3>
-                            <h3>SMAN 1 Sindang</h3>
-                        </div>
-                    </div>
-                </div>
+<div class="pd-ltr-20">
+    <div class="card-box pd-20 height-100-p mb-30">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <img src="<?= site_url('assets/images/slider_img.jpg') ?>" alt="">
+            </div>
+            <div class="col-md-8">
+                <h4 class="font-20 weight-500 mb-10 text-capitalize">Selamat Datang di</h4>
+                <h4 class="font-20 weight-500 mb-10 text-capitalize">Web E-Learning</h4>
+                <h4 class="font-20 weight-500 mb-10 text-capitalize">SMAN 1 Sindang</h4>
             </div>
         </div>
     </div>
-</section>
+</div>
 <?= $this->endSection() ?>

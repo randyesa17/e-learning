@@ -5,143 +5,155 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>E-Learning | Halaman Admin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/bootstrap.css') ?>">
+    <!--external css-->
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/font-awesome/css/font-awesome.css') ?>">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/zabuto_calendar.css') ?>" type="text/css">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/js/gritter/css/jquery.gritter.css') ?>" type="text/css">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/lineicons/style.css') ?>" type="text/css">
+
+    <!-- Custom styles for this template -->
     <link href="<?= site_url('assets/css/styleAdmin.css') ?>" rel="stylesheet">
-    <title>Admin Page</title>
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style-responsive.css') ?>">
+
+    <script src="<?= site_url('assets/dashgum/js/chart-master/Chart.js') ?>"></script>
 </head>
 
 <body>
-    <?php
+    <section id="container">
+        <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+        <!--header start-->
+        <header class="header black-bg">
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+            </div>
+            <!--logo start-->
+            <a href="<?= site_url('admin/home') ?>" class="logo"><b>Halaman Admin</b></a>
+            <!-- logo end -->
+            <div class="top-menu">
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="<?= site_url('admin/logout') ?>">Logout</a></li>
+                </ul>
+            </div>
+        </header>
+        <!--header end-->
+        <?php
         $uri = service('uri');
-    ?>
-    <nav class="mnb navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <i class="ic fa fa-bars"></i>
-                </button>
-                <div style="padding: 15px 0;">
-                    <a href="#" id="msbo"><i class="ic fa fa-bars"></i></a>
-                </div>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false"><?= session()->get('nama') ?><span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?= site_url('admin/profil') ?>">Profil</a></li>
-                            <!-- <li><a href="#">Upgrade</a></li>
-                            <li><a href="#">Help</a></li> -->
-                            <li role="separator" class="divider"></li>
-                            <li><a href="<?= site_url('admin/logout') ?>">Logout</a></li>
-                        </ul>
-                    </li>
-                    <!-- <li><a href="#"><i class="fa fa-bell-o"></i></a></li>
-                    <li><a href="#"><i class="fa fa-comment-o"></i></a></li> -->
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!--msb: main sidebar-->
-    <div class="msb" id="msb">
-        <nav class="navbar navbar-default" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <div class="brand-wrapper">
-                    <!-- Brand -->
-                    <div class="brand-name-wrapper">
-                        <a class="navbar-brand" href="<?= site_url('admin/home') ?>">
-                            ADMIN PAGE
+        ?>
+        <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+        <!--sidebar start-->
+        <aside>
+            <div class="nav-collapse" id="sidebar">
+                <!-- sidebar menu start -->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <h5 class="centered"><?= session()->get('nama') ?></h5>
+
+                    <li class="mt">
+                        <a href="<?= site_url('admin/home') ?>"
+                            class="<?= ($uri->getSegment(2) == 'home' ? 'active' : null) ?>">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Beranda</span>
                         </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Main Menu -->
-            <div class="side-menu-container">
-                <ul class="nav navbar-nav">
-
-                    <li class="<?= ($uri->getSegment(2) == 'home' ? 'active' : null) ?>">
-                        <a href="<?= site_url('admin/home') ?>"><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li class="panel panel-default" id="dropdown">
-                        <a data-toggle="collapse" href="#dropdown-lvl1">
-                            <i class="fa fa-edit"></i> Input
-                            <span class="caret"></span>
+
+                    <li class="mt">
+                        <a href="<?= site_url('admin/siswa') ?>"
+                            class="<?= ($uri->getSegment(2) == 'siswa' ? 'active' : null) ?>">
+                            <i class="fa fa-group"></i>
+                            <span>Siswa</span>
                         </a>
-                        <!-- Dropdown level 1 -->
-                        <div id="dropdown-lvl1" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="<?= site_url('admin/inputSiswa') ?>">Siswa</a></li>
-                                    <li><a href="<?= site_url('admin/inputGuru') ?>">Guru</a></li>
-                                    <li><a href="<?= site_url('admin/inputJurusan') ?>">Jurusan</a></li>
-                                    <li><a href="<?= site_url('admin/inputMapel') ?>">Mata Pelajaran</a></li>
+                    </li>
 
-                                    <!-- Dropdown level 2 -->
-                                    <!-- <li class="panel panel-default" id="dropdown">
-                                        <a data-toggle="collapse" href="#dropdown-lvl2">
-                                            <i class="glyphicon glyphicon-off"></i> Sub Level <span
-                                                class="caret"></span>
-                                        </a>
-                                        <div id="dropdown-lvl2" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <ul class="nav navbar-nav">
-                                                    <li><a href="#">Link</a></li>
-                                                    <li><a href="#">Link</a></li>
-                                                    <li><a href="#">Link</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li> -->
-                                </ul>
-                            </div>
-                        </div>
+                    <li class="mt">
+                        <a href="<?= site_url('admin/guru') ?>"
+                            class="<?= ($uri->getSegment(2) == 'guru' ? 'active' : null) ?>">
+                            <i class="fa fa-male"></i>
+                            <span>Guru</span>
+                        </a>
                     </li>
-                    <li class="<?= ($uri->getSegment(2) == 'siswa' ? 'active' : null) ?>">
-                        <a href="<?= site_url('admin/siswa') ?>"><i class="fa fa-puzzle-piece"></i> Siswa</a>
+
+                    <li class="mt">
+                        <a href="<?= site_url('admin/jurusan') ?>"
+                            class="<?= ($uri->getSegment(2) == 'jurusan' ? 'active' : null) ?>">
+                            <i class="fa fa-graduation-cap"></i>
+                            <span>Jurusan</span>
+                        </a>
                     </li>
-                    <li class="<?= ($uri->getSegment(2) == 'guru' ? 'active' : null) ?>">
-                        <a href="<?= site_url('admin/guru') ?>"><i class="fa fa-puzzle-piece"></i> Guru</a>
+
+                    <li class="mt">
+                        <a href="<?= site_url('admin/mapel') ?>"
+                            class="<?= ($uri->getSegment(2) == 'mapel' ? 'active' : null) ?>">
+                            <i class="fa fa-star"></i>
+                            <span>Mata Pelajaran</span>
+                        </a>
                     </li>
-                    <li class="<?= ($uri->getSegment(2) == 'jurusan' ? 'active' : null) ?>">
-                        <a href="<?= site_url('admin/jurusan') ?>"><i class="fa fa-puzzle-piece"></i> Jurusan</a>
+
+                    <li class="mt">
+                        <a href="<?= site_url('admin/nilai') ?>"
+                            class="<?= ($uri->getSegment(2) == 'nilai' ? 'active' : null) ?>">
+                            <i class="fa fa-book"></i>
+                            <span>Nilai</span>
+                        </a>
                     </li>
-                    <li class="<?= ($uri->getSegment(2) == 'mapel' ? 'active' : null) ?>">
-                        <a href="<?= site_url('admin/mapel') ?>"><i class="fa fa-puzzle-piece"></i> Mata Pelajaran</a>
-                    </li>
-                    <li class="<?= ($uri->getSegment(2) == 'nilai' ? 'active' : null) ?>">
-                        <a href="<?= site_url('admin/nilai') ?>"><i class="fa fa-puzzle-piece"></i> Nilai</a>
-                    </li>
-                    <li class="<?= ($uri->getSegment(2) == 'atur' ? 'active' : null) ?>">
-                        <a href="<?= site_url('admin/atur') ?>"><i class="fa fa-puzzle-piece"></i> Admin</a>
+
+                    <li class="mt">
+                        <a href="<?= site_url('admin/atur') ?>"
+                            class="<?= ($uri->getSegment(2) == 'kelas' ? 'active' : null) ?>">
+                            <i class="fa fa-child"></i>
+                            <span>Admin</span>
+                        </a>
                     </li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
-        </nav>
-    </div>
-    <!--main content wrapper-->
-    <div class="mcw">
-        <!--navigation here-->
-        <!--main content view-->
-        <div class="container">
-            <?= $this->renderSection('content') ?>
-        </div>
-    </div>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"> -->
-    </script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="<?= site_url('assets/js/scriptAdmin.js') ?>"></script>
+        <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <?= $this->renderSection('content') ?>
+            </section>
+        </section>
+        <!--main content end-->
+
+        <!--footer start-->
+        <footer class="site-footer">
+            <div class="text-center">
+                2021 - Esa
+                <a href="#" class="go-top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+            </div>
+        </footer>
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="<?= site_url('assets/dashgum/js/jquery.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery-1.8.3.min.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/bootstrap.min.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.dcjqaccordion.2.7.js') ?>" class="include"
+        type="text/javascript"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.scrollTo.min.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.nicescroll.js') ?>" type="text/javascript"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.sparkline.js') ?>"></script>
+
+    <!--common script for all pages-->
+    <script src="<?= site_url('assets/dashgum/js/common-scripts.js') ?>"></script>
+
+    <script src="<?= site_url('assets/dashgum/js/gritter/js/jquery.gritter.js') ?>" type="text/javascript"></script>
+    <script src="<?= site_url('assets/dashgum/js/gritter.conf.js') ?>" type="text/javascript"></script>
 </body>
 
 </html>

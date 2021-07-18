@@ -7,88 +7,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Learning | <?= $judul ?></title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/bootstrap.css') ?>">
-    <!--external css-->
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/font-awesome/css/font-awesome.css') ?>">
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style.css') ?>">
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style-responsive.css') ?>">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="<?= site_url('assets/deskapp/vendors/styles/core.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= site_url('assets/deskapp/vendors/styles/icon-font.min.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= site_url('assets/deskapp/vendors/styles/style.css') ?>">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119386393-1');
+    </script>
 </head>
 
-<body>
-    <!-- **********************************************************************************************************************************************************
-    MAIN CONTENT
-    *********************************************************************************************************************************************************** -->
-
-    <div id="login-page">
+<body class="login-page">
+    <div class="login-header box-shadow">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="brand-logo">
+                <a href="#">
+                    <img width="50px" src="<?= site_url('assets/images/logo.png') ?>" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
         <div class="container">
-            <form action="<?= $action ?>" method="post" class="form-login">
-                <h2 class="form-login-heading"><?= $judul ?></h2>
-                <div class="login-wrap">
-                    <div class="col">
-                        <?php if(!empty(session()->getFlashdata('info'))) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php 
-                                echo session()->getFlashdata('info'); 
-                            ?>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Username"
-                        autofocus>
-                    <br>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Password">
-                    <label class="checkbox">
-                        <span class="pull-right">
-                            <a data-toggle="modal" href="#" data-target="#myModal">Lupa Password?</a>
-                        </span>
-                    </label>
-                    <button type="submit" class="btn btn-theme btn-block"><i class="fa fa-lock"></i> Login</button>
-                    <?php if($judul != "Login Admin") : ?>
-                    <div class="registration">
-                        <br>
-                        <a href="<?= site_url() ?>"><i class="fa fa-angle-left"></i> Kembali ke Halaman Utama</a>
-                    </div>
-                    <?php endif; ?>
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-7">
+                    <img src="<?= site_url('assets/images/slider_img.jpg') ?>" alt="">
                 </div>
-
-                <!-- Modal -->
-                <div class="modal fade" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"
-                    id="myModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Lupa Password ?</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>Silahkan Hubungi Admin</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button data-dismiss="modal" class="btn btn-default" type="button">Oke</button>
-                            </div>
+                <div class="col-md-6 col-lg-5">
+                    <div class="login-box bg-white box-shadow border-radius-10">
+                        <div class="login-title">
+                            <h2 class="text-center text-primary"><?= $judul ?></h2>
                         </div>
+                        <form action="<?= $action ?>" method="post">
+                            <div class="input-group custom">
+                                <input type="text" name="username" class="form-control form-control-lg"
+                                    placeholder="Username">
+                                <div class="input-group-append custom">
+                                    <span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+                                </div>
+                            </div>
+                            <div class="input-group custom">
+                                <input type="password" name="password" class="form-control form-control-lg"
+                                    placeholder="********">
+                                <div class="input-group-append custom">
+                                    <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group mb-0">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <!-- modal -->
-            </form>
+            </div>
         </div>
     </div>
 
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="<?= site_url('assets/dashgum/js/jquery.js') ?>"></script>
-    <script src="<?= site_url('assets/dashgum/js/bootstrap.min.js') ?>"></script>
-
-    <!--BACKSTRETCH-->
-    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
-    <script type="text/javascript" src="<?= site_url('assets/dashgum/js/jquery.backstretch.min.js') ?>"></script>
-    <script>
-    $.backstretch("<?= site_url('assets/images/slider_img.jpg') ?>", {
-        speed: 500
-    });
-    </script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/core.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/script.min.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/process.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/layout-settings.js') ?>"></script>
 </body>
 
 </html>
