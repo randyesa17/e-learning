@@ -47,8 +47,10 @@
                         <td><?= $value['kelamin'] ?></td>
                         <td><?= $value['alamat'] ?></td>
                         <td><?= $value['jurusan'] ?></td>
-                        <td><img id="foto" name="foto" src="<?= site_url('assets/images/siswa/' . $value['foto']) ?>"
-                                width="50px">
+                        <td>
+                            <a href="<?= site_url('assets/images/siswa/' . $value['foto']) ?>" target="_blank"
+                                rel="noopener noreferrer"><img id="foto" name="foto"
+                                    src="<?= site_url('assets/images/siswa/' . $value['foto']) ?>" width="50px"></a>
                         </td>
                         <td>
                             <div style="display: none;" id="password<?= $no ?>"><?= $value['password'] ?></div>
