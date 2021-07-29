@@ -11,7 +11,7 @@
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= site_url('admin/home') ?>">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="<?= site_url('admin/mapel') ?>">Mata Pelajaran</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('admin/kelas') ?>">Kelas</a></li>
                             <li class="breadcrumb-item active" aria-current="page"><?= $judul ?></li>
                         </ol>
                     </nav>
@@ -34,14 +34,28 @@
             </div>
             <div class="clearfix">
                 <div class="pull-left">
-                    <h4 class="text-blue h4">Tambah Data Mata Pelajaran</h4>
+                    <h4 class="text-blue h4">Tambah Data Kelas</h4>
                 </div>
             </div>
-            <form action="<?= site_url('admin/inputMapel') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= site_url('admin/inputKelas') ?>" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
-                    <label for="mapel" class="col-sm-12 col-md-2 col-form-label">Mata Pelajaran</label>
+                    <label for="kelas" class="col-sm-12 col-md-2 col-form-label">Kelas</label>
                     <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" name="mapel" id="mapel" required>
+                        <div class="row">
+                            <div class="col-2">
+                                <select class="form-control" name="kelas" id="kelas" required>
+                                    <option value="X">X</option>
+                                    <option value="XI">XI</option>
+                                    <option value="XII">XII</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" name="jurusan" id="jurusan" required>
+                            </div>
+                            <div class="col-2">
+                                <input type="text" class="form-control" name="ruang" id="ruang" required>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row text-center">

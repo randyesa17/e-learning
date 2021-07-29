@@ -11,12 +11,12 @@
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= site_url('admin/home') ?>">Beranda</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Mata Pelajaran</li>
+                            <li class="breadcrumb-item active" aria-current="page">Kelas</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
-                    <a class="btn btn-primary" href="<?= site_url('admin/inputMapel') ?>">Input Mata Pelajaran</a>
+                    <a class="btn btn-primary" href="<?= site_url('admin/inputKelas') ?>">Input Kelas</a>
                 </div>
             </div>
         </div>
@@ -25,17 +25,17 @@
                 <table class="table table-hover">
                     <tr>
                         <th width="5%">No</th>
-                        <th>Mata Pelajaran</th>
+                        <th>Kelas</th>
                         <th colspan="2" width="5%">Aksi</th>
                     </tr>
                     <?php $no = 1;
-                    foreach ($mapel as $key => $value) : ?>
+                    foreach ($kelas as $key => $value) : ?>
                     <tr>
                         <td><?= $no++ ?></td>
-                        <td><?= $value['mapel'] ?></td>
+                        <td><?= $value['kelas'] ?></td>
                         <td>
                             <a class="btn btn-sm btn-danger" onclick="return confirm('Apa anda yakin?')"
-                                href="<?= site_url('admin/hapusMapel/' . $value['idmapel']) ?>"><i
+                                href="<?= site_url('admin/hapusKelas/' . $value['idkelas']) ?>"><i
                                     class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>

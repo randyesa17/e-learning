@@ -1,96 +1,105 @@
 <?= $this->extend('templates/admin') ?>
 <?= $this->section('content') ?>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2><?= $judul ?></h2>
-        </div>
-    </div>
-    <hr>
-    <div class="col">
-        <?php if(!empty(session()->getFlashdata('info'))) : ?>
-        <div class="alert alert-danger" role="alert">
-            <?php 
-                $error = session()->getFlashdata('info'); 
-                foreach ($error as $key => $value) {
-                    echo $value;
-                    echo "<br>";
-                }
-            ?>
-        </div>
-        <?php endif; ?>
-    </div>
-    <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 mt-5 pt-3 pb-3 bg-white from-wrapper">
-        <div class="row">
-            <div class="col">
-                <form action="<?= site_url('admin/inputGuru') ?>" method="post" enctype="multipart/form-data">
-                    <div style="margin-bottom: 10px" class="row mb-3 mt-4">
-                        <label for="nip" class="col-sm-5 col-form-label">Nomor Induk Pegawai</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" name="nip" id="nip" required>
-                        </div>
+<div class="pd-ltr-20 xs-pd-20-10">
+    <div class="min-height-200px">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="title">
+                        <h4><?= $judul ?></h4>
                     </div>
-                    <div style="margin-bottom: 10px" class="row mb-3 mt-4">
-                        <label for="nama" class="col-sm-5 col-form-label">Nama Lengkap</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" name="nama" id="nama" required>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px" class="row mb-3 mt-4">
-                        <label for="tempatLahir" class="col-sm-5 col-form-label">Tempat Lahir</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" name="tempatLahir" id="tempatLahir"
-                                required>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px" class="row mb-3 mt-4">
-                        <label for="tglLahir" class="col-sm-5 col-form-label">Tanggal Lahir</label>
-                        <div class="col-sm-6">
-                            <input type="date" class="form-control form-control-sm" name="tglLahir" id="tglLahir"
-                                required>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px" class="row mb-3">
-                        <label for="kelamin" class="col-sm-5 col-form-label">Jenis Kelamin</label>
-                        <div class="col-sm-6">
-                            <label class="radio-inline">
-                                <input type="radio" name="kelamin" id="kelamin" value="cowo"> Laki-laki
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="kelamin" id="kelamin" value="cewe"> Perempuan
-                            </label>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px" class="row mb-3 mt-4">
-                        <label for="alamat" class="col-sm-5 col-form-label">Alamat</label>
-                        <div class="col-sm-6">
-                            <textarea class="form-control form-control-sm" name="alamat" id="alamat" row="3"
-                                required></textarea>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px" class="row mb-3">
-                        <label for="mapel" class="col-sm-5 col-form-label">Mata Pelajaran</label>
-                        <div class="col-sm-6">
-                            <select class="form-control form-control-sm" name="mapel" id="mapel">
-                                <option value="-1">--Pilih Mata Pelajaran--</option>
-                                <?php foreach($mapel as $key => $value) : ?>
-                                <option value="<?= $value['mapel'] ?>"><?= $value['mapel'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px" class="row mb-3 mt-4">
-                        <label for="foto" class="col-sm-5 col-form-label">Foto</label>
-                        <div class="col-sm-6">
-                            <input type="file" class="form-control form-control-sm" name="foto" id="foto"
-                                accept="image/*" required>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 10px" class="form-group text-center">
-                        <button class="btn btn-primary" type="submit">Tambah</button>
-                    </div>
-                </form>
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= site_url('admin/home') ?>">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('admin/guru') ?>">Guru</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><?= $judul ?></li>
+                        </ol>
+                    </nav>
+                </div>
             </div>
+        </div>
+        <div class="pd-20 card-box mb-30">
+            <div class="col">
+                <?php if (!empty(session()->getFlashdata('info'))) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php
+                        $error = session()->getFlashdata('info');
+                        foreach ($error as $key => $value) {
+                            echo $value;
+                            echo "<br>";
+                        }
+                        ?>
+                </div>
+                <?php endif; ?>
+            </div>
+            <div class="clearfix">
+                <div class="pull-left">
+                    <h4 class="text-blue h4">Tambah Data Guru</h4>
+                </div>
+            </div>
+            <form action="<?= site_url('admin/inputGuru') ?>" method="post" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label for="nip" class="col-sm-12 col-md-2 col-form-label">Nomor Induk Pegawai</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input type="text" class="form-control" name="nip" id="nip" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="nama" class="col-sm-12 col-md-2 col-form-label">Nama Lengkap</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input type="text" class="form-control" name="nama" id="nama" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tempatLahir" class="col-sm-12 col-md-2 col-form-label">Tempat Lahir</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input type="text" class="form-control" name="tempatLahir" id="tempatLahir" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tglLahir" class="col-sm-12 col-md-2 col-form-label">Tanggal Lahir</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input type="date" class="form-control" name="tglLahir" id="tglLahir" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="kelamin" class="col-sm-12 col-md-2 col-form-label">Jenis Kelamin</label>
+                    <div class="col-sm-12 col-md-10">
+                        <label class="radio-inline">
+                            <input type="radio" class="form-control" name="kelamin" id="kelamin" value="cowo"> Laki-laki
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="form-control" name="kelamin" id="kelamin" value="cewe"> Perempuan
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="alamat" class="col-sm-12 col-md-2 col-form-label">Alamat</label>
+                    <div class="col-sm-12 col-md-10">
+                        <textarea class="form-control" name="alamat" id="alamat" row="3" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="mapel" class="col-sm-12 col-md-2 col-form-label">Mata Pelajaran</label>
+                    <div class="col-sm-12 col-md-10">
+                        <select class="form-control" name="mapel" id="mapel">
+                            <option value="-1">--Pilih Mata Pelajaran--</option>
+                            <?php foreach ($mapel as $key => $value) : ?>
+                            <option value="<?= $value['idmapel'] ?>"><?= $value['mapel'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="foto" class="col-sm-12 col-md-2 col-form-label">Foto</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input type="file" class="form-control" name="foto" id="foto" accept="image/*" required>
+                    </div>
+                </div>
+                <div class="form-group row text-center">
+                    <button class="btn btn-primary" type="submit">Tambah</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

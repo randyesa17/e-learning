@@ -6,14 +6,14 @@ use App\Controllers\BaseController;
 use App\Models\AdminModel;
 use App\Models\SiswaModel;
 use App\Models\GuruModel;
-use App\Models\JurusanModel;
+use App\Models\KelasModel;
 use App\Models\MapelModel;
 
 class Admin extends BaseController
 {
     public function index()
     {
-		return view('admin/home');
+        return view('admin/home');
     }
 
     public function atur()
@@ -26,13 +26,13 @@ class Admin extends BaseController
             'judul' => 'Data Admin',
             'admin' => $admin,
         ];
-		return view('admin/atur', $data);
+        return view('admin/atur', $data);
     }
 
     public function tambah()
     {
         $data = [];
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new AdminModel();
 
             $data = [
@@ -43,7 +43,7 @@ class Admin extends BaseController
             ];
 
             $model->insert($data);
-            if(!$model->errors()){
+            if (!$model->errors()) {
                 return redirect()->to(site_url('admin/atur'));
             } else {
                 $error = $model->errors();
@@ -51,7 +51,7 @@ class Admin extends BaseController
                 return redirect()->to(site_url('admin/tambah'));
             }
         } else {
-            $idAdmin = "admin".uniqid();
+            $idAdmin = "admin" . uniqid();
             $data = [
                 'judul' => 'Tambah Admin',
                 'kode' => $idAdmin,
@@ -62,15 +62,15 @@ class Admin extends BaseController
 
     public function login()
     {
-        if($this->request->getMethod() == 'post'){
-    		$model = new AdminModel();
+        if ($this->request->getMethod() == 'post') {
+            $model = new AdminModel();
 
             $username = $this->request->getPost('username');
             $password = md5($this->request->getPost('password'));
 
             $admin = $model->where(['username' => $username, 'password' => $password])->first();
 
-            if(empty($admin)){
+            if (empty($admin)) {
                 session()->setFlashdata('info', 'Username atau Password Salah!');
                 return redirect()->to(site_url('admin'));
             } else {
@@ -83,7 +83,7 @@ class Admin extends BaseController
                 'action' => site_url('admin'),
             ];
             return view('templates/login', $data);
-        } 
+        }
     }
 
     public function setSession($admin)
@@ -103,19 +103,19 @@ class Admin extends BaseController
     {
         $model = new AdminModel();
 
-		$id = session()->get('idadmin');
-		$admin = $model->find($id);
-		$judul = "PROFIL ".$admin['nama'];
-		$data = [
-			'judul' => $judul,
-			'admin' => $admin,
-		];
+        $id = session()->get('idadmin');
+        $admin = $model->find($id);
+        $judul = "PROFIL " . $admin['nama'];
+        $data = [
+            'judul' => $judul,
+            'admin' => $admin,
+        ];
         return view('admin/profil', $data);
     }
 
     public function nama()
     {
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new AdminModel();
 
             $id = session()->get('idadmin');
@@ -129,31 +129,31 @@ class Admin extends BaseController
 
     public function password()
     {
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new AdminModel();
 
             $id = session()->get('idadmin');
             $passwordLama = $this->request->getPost('passwordlama');
 
             $admin = $model->where(['idadmin' => $id])->first();
-            if($admin['password'] == md5($passwordLama)){
+            if ($admin['password'] == md5($passwordLama)) {
                 $password = $this->request->getPost('password');
-			    $repassword = $this->request->getPost('re-password');
-                if($password == $repassword){
+                $repassword = $this->request->getPost('re-password');
+                if ($password == $repassword) {
                     $password = md5($repassword);
                     $data = [
                         'password' => $password,
                     ];
                     $model->update($id, $data);
-                    $data['info']="Berhasil ganti Password";
+                    $data['info'] = "Berhasil ganti Password";
                     return redirect()->to(site_url('admin/profil'));
                 } else {
                     session()->setFlashdata('info', 'Password Baru Tidak Sama');
-				    return redirect()->to(site_url('admin/profil/password'));
+                    return redirect()->to(site_url('admin/profil/password'));
                 }
             } else {
                 session()->setFlashdata('info', 'Password Lama Salah');
-			    return redirect()->to(site_url('admin/profil/password'));
+                return redirect()->to(site_url('admin/profil/password'));
             }
         } else {
             $data = [
@@ -171,35 +171,38 @@ class Admin extends BaseController
         return redirect()->to(site_url('admin/atur'));
     }
 
-    public function jurusan()
+    public function kelas()
     {
-        $model = new JurusanModel();
+        $model = new KelasModel();
 
-        $jurusan = $model->findAll();
+        $kelas = $model->orderBy('kelas', 'asc')->findAll();
 
         $data = [
-            'judul' => 'Data Jurusan',
-            'jurusan' => $jurusan,
+            'judul' => 'Data Kelas',
+            'kelas' => $kelas,
         ];
-		return view('admin/jurusan', $data);
+        return view('admin/kelas', $data);
     }
 
     public function siswa()
     {
         $model = new SiswaModel();
+        $modelKelas = new KelasModel();
 
         $siswa = $model->findAll();
+        $kelas = $modelKelas->orderBy('kelas', 'asc')->findAll();
 
         $data = [
             'judul' => 'Data Siswa',
             'siswa' => $siswa,
+            'kelas' => $kelas,
         ];
-		return view('admin/siswa', $data);
+        return view('admin/siswa', $data);
     }
 
     public function inputSiswa()
     {
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new SiswaModel();
 
             helper('text');
@@ -209,7 +212,7 @@ class Admin extends BaseController
             ];
             $model->setValidationRules($rules);
 
-            if($this->request->getPost('kelamin') == "cowo"){
+            if ($this->request->getPost('kelamin') == "cowo") {
                 $kelamin = "Laki-laki";
             } else {
                 $kelamin = "Perempuan";
@@ -226,13 +229,13 @@ class Admin extends BaseController
                 'tglLahir' => $this->request->getPost('tglLahir'),
                 'kelamin' => $kelamin,
                 'alamat' => $this->request->getPost('alamat'),
-                'jurusan' => $this->request->getPost('jurusan'),
+                'idkelas' => $this->request->getPost('kelas'),
                 'foto' => $name,
                 'password' => random_string('alnum', 6),
             ];
-            
+
             $model->insert($data);
-            if(!$model->errors()){
+            if (!$model->errors()) {
                 $file->move('./assets/images/siswa', $name);
                 return redirect()->to(site_url('admin/siswa'));
             } else {
@@ -241,12 +244,12 @@ class Admin extends BaseController
                 return redirect()->to(site_url('admin/inputSiswa'));
             }
         } else {
-            $model = new JurusanModel();
+            $model = new KelasModel();
 
-            $jurusan = $model->findAll();
+            $kelas = $model->findAll();
             $data = [
                 'judul' => 'Tambah Siswa',
-                'jurusan' => $jurusan
+                'kelas' => $kelas
             ];
             return view('admin/inputSiswa', $data);
         }
@@ -254,19 +257,19 @@ class Admin extends BaseController
 
     public function editSiswa($nis = null)
     {
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new SiswaModel();
 
-            if($this->request->getPost('kelamin') == "cowo"){
+            if ($this->request->getPost('kelamin') == "cowo") {
                 $kelamin = "Laki-laki";
             } else {
                 $kelamin = "Perempuan";
             }
-            
+
             $file = $this->request->getFile('foto');
             $name = $file->getName();
 
-            if(empty($name)){
+            if (empty($name)) {
                 $name = $this->request->getPost('foto');
             } else {
                 $name = $file->getRandomName();
@@ -281,29 +284,29 @@ class Admin extends BaseController
                 'tglLahir' => $this->request->getPost('tglLahir'),
                 'kelamin' => $kelamin,
                 'alamat' => $this->request->getPost('alamat'),
-                'jurusan' => $this->request->getPost('jurusan'),
+                'idkelas' => $this->request->getPost('kelas'),
                 'foto' => $name,
             ];
-            
+
             $model->update($nis, $data);
-            if(!$model->errors()){
+            if (!$model->errors()) {
                 return redirect()->to(site_url('admin/siswa'));
             } else {
                 $error = $model->errors();
                 session()->setFlashdata('info', $error);
-                return redirect()->to(site_url('admin/editSiswa'.$nis));
+                return redirect()->to(site_url('admin/editSiswa' . $nis));
             }
         } else {
             $model = new SiswaModel();
-            $modelJurusan = new JurusanModel();
+            $modelKelas = new KelasModel();
 
             $siswa = $model->find($nis);
-            $jurusan = $modelJurusan->findAll();
+            $kelas = $modelKelas->findAll();
 
             $data = [
                 'judul' => 'Edit Data Siswa',
                 'siswa' => $siswa,
-                'jurusan' => $jurusan,
+                'kelas' => $kelas,
             ];
             return view('admin/editSiswa', $data);
         }
@@ -320,19 +323,22 @@ class Admin extends BaseController
     public function guru()
     {
         $model = new GuruModel();
+        $modelMapel = new MapelModel();
 
         $guru = $model->findAll();
+        $mapel = $modelMapel->findAll();
 
         $data = [
             'judul' => 'Data Guru',
             'guru' => $guru,
+            'mapel' => $mapel,
         ];
-		return view('admin/guru', $data);
+        return view('admin/guru', $data);
     }
 
     public function inputGuru()
     {
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new GuruModel();
 
             helper('text');
@@ -341,7 +347,7 @@ class Admin extends BaseController
             ];
             $model->setValidationRules($rules);
 
-            if($this->request->getPost('kelamin') == "cowo"){
+            if ($this->request->getPost('kelamin') == "cowo") {
                 $kelamin = "Laki-laki";
             } else {
                 $kelamin = "Perempuan";
@@ -357,13 +363,13 @@ class Admin extends BaseController
                 'tglLahir' => $this->request->getPost('tglLahir'),
                 'kelamin' => $kelamin,
                 'alamat' => $this->request->getPost('alamat'),
-                'mapel' => $this->request->getPost('mapel'),
+                'idmapel' => $this->request->getPost('mapel'),
                 'foto' => $name,
                 'password' => random_string('alnum', 6),
             ];
-            
+
             $model->insert($data);
-            if(!$model->errors()){
+            if (!$model->errors()) {
                 $file->move('./assets/images/guru', $name);
                 return redirect()->to(site_url('admin/guru'));
             } else {
@@ -385,19 +391,19 @@ class Admin extends BaseController
 
     public function editGuru($nip = null)
     {
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new GuruModel();
 
-            if($this->request->getPost('kelamin') == "cowo"){
+            if ($this->request->getPost('kelamin') == "cowo") {
                 $kelamin = "Laki-laki";
             } else {
                 $kelamin = "Perempuan";
             }
-            
+
             $file = $this->request->getFile('foto');
             $name = $file->getName();
 
-            if(empty($name)){
+            if (empty($name)) {
                 $name = $this->request->getPost('foto');
             } else {
                 $name = $file->getRandomName();
@@ -410,17 +416,17 @@ class Admin extends BaseController
                 'tglLahir' => $this->request->getPost('tglLahir'),
                 'kelamin' => $kelamin,
                 'alamat' => $this->request->getPost('alamat'),
-                'mapel' => $this->request->getPost('mapel'),
+                'idmapel' => $this->request->getPost('mapel'),
                 'foto' => $name,
             ];
-            
+
             $model->update($nip, $data);
-            if(!$model->errors()){
+            if (!$model->errors()) {
                 return redirect()->to(site_url('admin/guru'));
             } else {
                 $error = $model->errors();
                 session()->setFlashdata('info', $error);
-                return redirect()->to(site_url('admin/editGuru/'.$nis));
+                return redirect()->to(site_url('admin/editGuru/' . $nis));
             }
         } else {
             $model = new GuruModel();
@@ -446,41 +452,43 @@ class Admin extends BaseController
         return redirect()->to(site_url('admin/guru'));
     }
 
-    public function inputJurusan()
+    public function inputKelas()
     {
-        if($this->request->getMethod() == 'post'){
-            $model = new JurusanModel();
+        if ($this->request->getMethod() == 'post') {
+            $model = new KelasModel();
+
+            $kelas = $this->request->getPost('kelas') . " " . $this->request->getPost('jurusan') . " " . $this->request->getPost('ruang');
 
             $data = [
-                'jurusan' => $this->request->getPost('jurusan'),
+                'kelas' => $kelas,
             ];
 
             $rules = [
-                'jurusan' => 'is_unique[jurusan.jurusan]'
+                'kelas' => 'is_unique[kelas.kelas]'
             ];
             $model->setValidationRules($rules);
             $model->insert($data);
-            if(!$model->errors()){
-                return redirect()->to(site_url('admin/jurusan'));
+            if (!$model->errors()) {
+                return redirect()->to(site_url('admin/kelas'));
             } else {
                 $error = $model->errors();
                 session()->setFlashdata('info', $error);
-                return redirect()->to(site_url('admin/inputJurusan'));
+                return redirect()->to(site_url('admin/inputKelas'));
             }
         } else {
             $data = [
-                'judul' => 'Tambah Jurusan',
+                'judul' => 'Tambah Kelas',
             ];
-            return view('admin/inputJurusan', $data);
+            return view('admin/inputKelas', $data);
         }
     }
 
-    public function hapusJurusan($id = null)
+    public function hapusKelas($id = null)
     {
-        $model = new JurusanModel();
+        $model = new KelasModel();
         $model->delete($id);
 
-        return redirect()->to(site_url('admin/jurusan'));
+        return redirect()->to(site_url('admin/kelas'));
     }
 
     public function mapel()
@@ -493,12 +501,12 @@ class Admin extends BaseController
             'judul' => 'Data Mata Pelajaran',
             'mapel' => $mapel,
         ];
-		return view('admin/mapel', $data);
+        return view('admin/mapel', $data);
     }
 
     public function inputMapel()
     {
-        if($this->request->getMethod() == 'post'){
+        if ($this->request->getMethod() == 'post') {
             $model = new MapelModel();
 
             $data = [
@@ -510,7 +518,7 @@ class Admin extends BaseController
             ];
             $model->setValidationRules($rules);
             $model->insert($data);
-            if(!$model->errors()){
+            if (!$model->errors()) {
                 return redirect()->to(site_url('admin/mapel'));
             } else {
                 $error = $model->errors();

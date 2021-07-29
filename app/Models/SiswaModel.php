@@ -1,11 +1,13 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use CodeIgniter\Model;
 
 class SiswaModel extends Model
 {
     protected $table = 'siswa';
-    protected $allowedFields = ['nis', 'nisn', 'nama', 'tempatLahir', 'tglLahir', 'kelamin', 'alamat', 'jurusan', 'foto', 'password', 'nilaiTugas', 'nilaiUjian', 'nilaiAkhir'];
+    protected $allowedFields = ['nis', 'nisn', 'nama', 'tempatLahir', 'tglLahir', 'kelamin', 'alamat', 'idkelas', 'foto', 'password', 'nilaiTugas', 'nilaiUjian', 'nilaiAkhir'];
     protected $primaryKey = 'nis';
     protected $validationMessages = [
         'nis' => [

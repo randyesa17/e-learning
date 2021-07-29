@@ -100,8 +100,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= site_url('admin/jurusan') ?>" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-mortarboard"></span><span class="mtext">Jurusan</span>
+                        <a href="<?= site_url('admin/kelas') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-mortarboard"></span><span class="mtext">Kelas</span>
                         </a>
                     </li>
                     <li>

@@ -31,7 +31,7 @@
                         <th>Tempat, Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
                         <th>Alamat</th>
-                        <th>Jurusan</th>
+                        <th>Kelas</th>
                         <th>Foto</th>
                         <th>Password</th>
                         <th colspan="2" width="5%">Aksi</th>
@@ -46,7 +46,15 @@
                         <td><?= $value['tempatLahir'] ?>, <?= date("d-m-Y", strtotime($value['tglLahir'])) ?></td>
                         <td><?= $value['kelamin'] ?></td>
                         <td><?= $value['alamat'] ?></td>
-                        <td><?= $value['jurusan'] ?></td>
+                        <td>
+                            <?php
+                                foreach ($kelas as $keyK => $valueK) {
+                                    if ($valueK['idkelas'] == $value['idkelas']) {
+                                        echo $valueK['kelas'];
+                                    }
+                                }
+                                ?>
+                        </td>
                         <td>
                             <a href="<?= site_url('assets/images/siswa/' . $value['foto']) ?>" target="_blank"
                                 rel="noopener noreferrer"><img id="foto" name="foto"

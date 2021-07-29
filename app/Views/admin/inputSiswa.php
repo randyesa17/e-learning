@@ -19,17 +19,19 @@
             </div>
         </div>
         <div class="pd-20 card-box mb-30">
-            <?php if (!empty(session()->getFlashdata('info'))) : ?>
-            <div class="alert alert-danger" role="alert">
-                <?php
-                    $error = session()->getFlashdata('info');
-                    foreach ($error as $key => $value) {
-                        echo $value;
-                        echo "<br>";
-                    }
-                    ?>
+            <div class="col">
+                <?php if (!empty(session()->getFlashdata('info'))) : ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php
+                        $error = session()->getFlashdata('info');
+                        foreach ($error as $key => $value) {
+                            echo $value;
+                            echo "<br>";
+                        }
+                        ?>
+                </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
             <div class="clearfix">
                 <div class="pull-left">
                     <h4 class="text-blue h4">Tambah Data Siswa</h4>
@@ -84,12 +86,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="jurusan" class="col-sm-12 col-md-2 col-form-label">Jurusan</label>
+                    <label for="kelas" class="col-sm-12 col-md-2 col-form-label">Kelas</label>
                     <div class="col-sm-12 col-md-10">
-                        <select class="form-control" name="jurusan" id="jurusan">
+                        <select class="form-control" name="kelas" id="kelas">
                             <option value="-1">--Pilih Kelas--</option>
-                            <?php foreach ($jurusan as $key => $value) : ?>
-                            <option value="<?= $value['jurusan'] ?>"><?= $value['jurusan'] ?></option>
+                            <?php foreach ($kelas as $key => $value) : ?>
+                            <option value="<?= $value['idkelas'] ?>"><?= $value['kelas'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

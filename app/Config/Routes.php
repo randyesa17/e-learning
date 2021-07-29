@@ -7,8 +7,7 @@ $routes = Services::routes();
 
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.
-if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
-{
+if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
 	require SYSTEMPATH . 'Config/Routes.php';
 }
 
@@ -34,7 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('tentang', 'Home::tentang');
-$routes->group('admin', function($routes){
+$routes->group('admin', function ($routes) {
 	$routes->add('/', 'Admin\Admin::login');
 	$routes->add('home', 'Admin\Admin::index', ['filter' => 'AuthAdmin']);
 	$routes->add('atur', 'Admin\Admin::atur', ['filter' => 'AuthAdmin']);
@@ -45,7 +44,7 @@ $routes->group('admin', function($routes){
 	$routes->add('profil/password', 'Admin\Admin::password', ['filter' => 'AuthAdmin']);
 	$routes->add('inputSiswa', 'Admin\Admin::inputSiswa', ['filter' => 'AuthAdmin']);
 	$routes->add('inputGuru', 'Admin\Admin::inputGuru', ['filter' => 'AuthAdmin']);
-	$routes->add('inputJurusan', 'Admin\Admin::inputJurusan', ['filter' => 'AuthAdmin']);
+	$routes->add('inputKelas', 'Admin\Admin::inputKelas', ['filter' => 'AuthAdmin']);
 	$routes->add('inputMapel', 'Admin\Admin::inputMapel', ['filter' => 'AuthAdmin']);
 	$routes->add('siswa', 'Admin\Admin::siswa', ['filter' => 'AuthAdmin']);
 	$routes->add('hapusSiswa/(:any)', 'Admin\Admin::hapusSiswa/$1', ['filter' => 'AuthAdmin']);
@@ -53,8 +52,8 @@ $routes->group('admin', function($routes){
 	$routes->add('guru', 'Admin\Admin::guru', ['filter' => 'AuthAdmin']);
 	$routes->add('hapusGuru/(:any)', 'Admin\Admin::hapusGuru/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('editGuru/(:any)', 'Admin\Admin::editGuru/$1', ['filter' => 'AuthAdmin']);
-	$routes->add('jurusan', 'Admin\Admin::jurusan', ['filter' => 'AuthAdmin']);
-	$routes->add('hapusJurusan/(:any)', 'Admin\Admin::hapusJurusan/$1', ['filter' => 'AuthAdmin']);
+	$routes->add('kelas', 'Admin\Admin::kelas', ['filter' => 'AuthAdmin']);
+	$routes->add('hapusKelas/(:any)', 'Admin\Admin::hapusKelas/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('mapel', 'Admin\Admin::mapel', ['filter' => 'AuthAdmin']);
 	$routes->add('hapusMapel/(:any)', 'Admin\Admin::hapusMapel/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai', 'Admin\Nilai::index', ['filter' => 'AuthAdmin']);
@@ -63,7 +62,7 @@ $routes->group('admin', function($routes){
 	$routes->add('logout', 'Admin\Admin::logout', ['filter' => 'AuthAdmin']);
 });
 
-$routes->group('guru', function($routes){
+$routes->group('guru', function ($routes) {
 	$routes->add('login', 'Guru\Guru::login');
 	$routes->add('/', 'Guru\Guru::index', ['filter' => 'AuthGuru']);
 	$routes->add('profil', 'Guru\Guru::profil', ['filter' => 'AuthGuru']);
@@ -83,7 +82,7 @@ $routes->group('guru', function($routes){
 	$routes->add('logout', 'Guru\Guru::logout', ['filter' => 'AuthGuru']);
 });
 
-$routes->group('siswa', function($routes){
+$routes->group('siswa', function ($routes) {
 	$routes->add('login', 'Siswa\Siswa::login');
 	$routes->add('/', 'Siswa\Siswa::index', ['filter' => 'AuthSiswa']);
 	$routes->add('kelas', 'Siswa\Kelas::index', ['filter' => 'AuthSiswa']);
@@ -108,7 +107,6 @@ $routes->group('siswa', function($routes){
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
-{
+if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
