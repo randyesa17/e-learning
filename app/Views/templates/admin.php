@@ -110,6 +110,22 @@
                         </a>
                     </li>
                     <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                        <a href="<?= site_url('admin/ujian') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-edit-file"></span><span class="mtext">Ujian</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= site_url('admin/jadwal') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-calendar-1"></span><span class="mtext">Jadwal</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
                         <a href="<?= site_url('admin/nilai') ?>" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-book-1"></span><span class="mtext">Nilai</span>
                         </a>

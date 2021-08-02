@@ -56,6 +56,13 @@ $routes->group('admin', function ($routes) {
 	$routes->add('hapusKelas/(:any)', 'Admin\Admin::hapusKelas/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('mapel', 'Admin\Admin::mapel', ['filter' => 'AuthAdmin']);
 	$routes->add('hapusMapel/(:any)', 'Admin\Admin::hapusMapel/$1', ['filter' => 'AuthAdmin']);
+	$routes->add('ujian', 'Admin\Ujian::index', ['filter' => 'AuthAdmin']);
+	$routes->add('ujian/ambilRuang', 'Admin\Ujian::ambilRuang', ['filter' => 'AuthAdmin']);
+	$routes->add('inputUjian', 'Admin\Ujian::tambah', ['filter' => 'AuthAdmin']);
+	$routes->add('hapusUjian/(:any)', 'Admin\Ujian::hapus/$1', ['filter' => 'AuthAdmin']);
+	$routes->add('soal/edit/(:any)', 'Admin\Ujian::ubahsoal/$1', ['filter' => 'AuthAdmin']);
+	$routes->add('soal/(:any)', 'Admin\Ujian::soal/$1', ['filter' => 'AuthAdmin']);
+	$routes->add('jadwal', 'Admin\Jadwal::index', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai', 'Admin\Nilai::index', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai/cari', 'Admin\Nilai::cari', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai/rekap', 'Admin\Nilai::rekap', ['filter' => 'AuthAdmin']);
