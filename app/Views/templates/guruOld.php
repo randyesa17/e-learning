@@ -5,70 +5,123 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.4/css/tether.min.css" rel="stylesheet">
-    <link href="<?= site_url('assets/css/styleGuru.css') ?>" rel="stylesheet">
-    <title>Laman Guru</title>
+    <title>E-Learning | Halaman Guru</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/bootstrap.css') ?>">
+    <!--external css-->
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/font-awesome/css/font-awesome.css') ?>">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/zabuto_calendar.css') ?>" type="text/css">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/js/gritter/css/jquery.gritter.css') ?>" type="text/css">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/lineicons/style.css') ?>" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style-responsive.css') ?>">
+
+    <script src="<?= site_url('assets/dashgum/js/chart-master/Chart.js') ?>"></script>
 </head>
 
 <body>
-    <div id="wrapper">
-        <div class="overlay"></div>
-
-        <!-- Sidebar -->
-        <nav class="navbar navbar-inverse fixed-top" id="sidebar-wrapper" role="navigation">
-            <ul class="nav sidebar-nav">
-                <div class="sidebar-header">
-                    <div class="sidebar-brand">
-                        <a href="#">Page Guru</a>
-                    </div>
-                </div>
-                <li><a href="<?= site_url('guru') ?>"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="<?= site_url('guru/kelas') ?>"><i class="fa fa-group"></i> Kelas</a></li>
-                <!-- <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-group"></i> Kelas <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu animated fadeInLeft" role="menu">
-                        <div class="dropdown-header">Dropdown heading</div>
-                        <li><a href="#pictures">Pictures</a></li>
-                        <li><a href="#videos">Videeos</a></li>
-                        <li><a href="#books">Books</a></li>
-                        <li><a href="#art">Art</a></li>
-                        <li><a href="#awards">Awards</a></li>
-                    </ul>
-                </li> -->
-                <li><a href="<?= site_url('guru/nilai') ?>"><i class="fa fa-book"></i> Nilai</a></li>
-                <li><a href="<?= site_url('guru/logout') ?>"><i class="fa fa-sign-out"></i> Logout</a></li>
-            </ul>
-        </nav>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <button type="button" class="hamburger animated fadeInLeft is-closed" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-                <span class="hamb-middle"></span>
-                <span class="hamb-bottom"></span>
-            </button>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <?= $this->renderSection('content') ?>
-                    </div>
-                </div>
+    <section id="container">
+        <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+        <!--header start-->
+        <header class="header black-bg">
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
             </div>
-        </div>
-        <!-- /#page-content-wrapper -->
+            <!--logo start-->
+            <a href="<?= site_url('guru') ?>" class="logo"><b>Halaman Guru</b></a>
+            <!-- logo end -->
+            <div class="top-menu">
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="<?= site_url('guru/logout') ?>">Logout</a></li>
+                </ul>
+            </div>
+        </header>
+        <!--header end-->
+        <?php
+        $uri = service('uri');
+        ?>
+        <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+        <!--sidebar start-->
+        <aside>
+            <div class="nav-collapse" id="sidebar">
+                <!-- sidebar menu start -->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <p class="centered"><img src="<?= site_url('assets/images/guru/'.session()->get('foto')) ?>"
+                            class="img-circle" width="60" height="60"></p>
+                    <h5 class="centered"><?= session()->get('nama') ?></h5>
 
-    </div>
-    <!-- /#wrapper -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.4/js/tether.min.js"></script>
-    <script src="<?= site_url('assets/js/scriptGuru.js') ?>"></script>
+                    <li class="mt">
+                        <a href="<?= site_url('guru') ?>" class="<?= ($uri->getSegment(2) == '' ? 'active' : null) ?>">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Beranda</span>
+                        </a>
+                    </li>
+
+                    <li class="mt">
+                        <a href="<?= site_url('guru/kelas') ?>"
+                            class="<?= ($uri->getSegment(2) == 'kelas' ? 'active' : null) ?>">
+                            <i class="fa fa-group"></i>
+                            <span>Kelas</span>
+                        </a>
+                    </li>
+
+                    <li class="mt">
+                        <a href="<?= site_url('guru/nilai') ?>"
+                            class="<?= ($uri->getSegment(2) == 'nilai' ? 'active' : null) ?>">
+                            <i class="fa fa-book"></i>
+                            <span>Nilai</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+
+        <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <?= $this->renderSection('content') ?>
+            </section>
+        </section>
+        <!--main content end-->
+
+        <!--footer start-->
+        <footer class="site-footer">
+            <div class="text-center">
+                2021 - Esa
+                <a href="#" class="go-top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+            </div>
+        </footer>
+    </section>
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="<?= site_url('assets/dashgum/js/jquery.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery-1.8.3.min.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/bootstrap.min.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.dcjqaccordion.2.7.js') ?>" class="include"
+        type="text/javascript"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.scrollTo.min.js') ?>"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.nicescroll.js') ?>" type="text/javascript"></script>
+    <script src="<?= site_url('assets/dashgum/js/jquery.sparkline.js') ?>"></script>
+
+    <!--common script for all pages-->
+    <script src="<?= site_url('assets/dashgum/js/common-scripts.js') ?>"></script>
+
+    <script src="<?= site_url('assets/dashgum/js/gritter/js/jquery.gritter.js') ?>" type="text/javascript"></script>
+    <script src="<?= site_url('assets/dashgum/js/gritter.conf.js') ?>" type="text/javascript"></script>
 </body>
 
 </html>
