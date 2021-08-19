@@ -72,7 +72,7 @@ class Ujian extends BaseController
             $ruang = $modelRuang->findAll();
 
             $data = [
-                'judul' => 'Tambah Mata Pelajaran',
+                'judul' => 'Tambah Ujian',
                 'ruang' => $ruang,
             ];
             return view('admin/inputUjian', $data);

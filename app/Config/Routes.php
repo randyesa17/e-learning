@@ -63,6 +63,11 @@ $routes->group('admin', function ($routes) {
 	$routes->add('soal/edit/(:any)', 'Admin\Ujian::ubahsoal/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('soal/(:any)', 'Admin\Ujian::soal/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal', 'Admin\Jadwal::index', ['filter' => 'AuthAdmin']);
+	$routes->add('jadwal/input', 'Admin\Jadwal::input', ['filter' => 'AuthAdmin']);
+	$routes->add('jadwal/edit/(:any)', 'Admin\Jadwal::edit/$1', ['filter' => 'AuthAdmin']);
+	$routes->add('jadwal/hapus/(:any)', 'Admin\Jadwal::hapus/$1', ['filter' => 'AuthAdmin']);
+	// $routes->add('jadwal/isi', 'Admin\Jadwal::loadData', ['filter' => 'AuthAdmin']);
+	// $routes->add('jadwal/event', 'Admin\Jadwal::ajax', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai', 'Admin\Nilai::index', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai/cari', 'Admin\Nilai::cari', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai/rekap', 'Admin\Nilai::rekap', ['filter' => 'AuthAdmin']);

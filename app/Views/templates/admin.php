@@ -19,6 +19,8 @@
     <link rel="stylesheet" type="text/css"
         href="<?= site_url('assets/deskapp/src/plugins/datatables/css/responsive.bootstrap4.min.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= site_url('assets/deskapp/vendors/styles/style.css') ?>">
+    <link rel="stylesheet" type="text/css"
+        href="<?= site_url('assets/deskapp/src/plugins/fullcalendar/fullcalendar.css') ?>">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -159,6 +161,9 @@
     <script src="<?= site_url('assets/deskapp/src/plugins/datatables/js/dataTables.responsive.min.js') ?>"></script>
     <script src="<?= site_url('assets/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js') ?>"></script>
     <script src="<?= site_url('assets/deskapp/vendors/scripts/dashboard.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/src/plugins/fullcalendar/fullcalendar.min.js') ?>"></script>
+    <!-- <script src="<?= site_url('assets/deskapp/vendors/scripts/calendar-setting.js') ?>"></script> -->
+    <script src="<?= site_url('assets/js/pengaturan-kalender.js') ?>"></script>
 </body>
 
 </html>
