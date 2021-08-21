@@ -5,7 +5,7 @@ namespace App\Controllers\Guru;
 use App\Controllers\BaseController;
 use App\Models\KelasModel;
 use App\Models\GuruModel;
-use App\Models\JurusanModel;
+use App\Models\RuangKelasModel;
 use App\Models\MapelModel;
 use App\Models\MateriModel;
 use App\Models\TugasModel;
@@ -13,17 +13,19 @@ use App\Models\PostModel;
 use App\Models\SoalModel;
 use App\Models\UjianModel;
 use App\Models\KumpulTugasModel;
+use App\Models\JadwalModel;
+use App\Models\SiswaModel;
 
 class Kelas extends BaseController
 {
     public function index()
     {
-        $model = new KelasModel();
-        $modelJurusan = new JurusanModel();
+        $model = new RuangKelasModel();
+        $modelKelas = new KelasModel();
 
-        $kelas = $model->where('nip', session()->get('nip'))->findAll();
+        $ruang = $model->where('nip', session()->get('nip'))->findAll();
 
-        $jurusan = $modelJurusan->findAll();
+        $kelas = $modelKelas->findAll();
 
         helper('text');
 
@@ -31,9 +33,9 @@ class Kelas extends BaseController
 
         $data = [
             'judul' => 'Kelas',
-            'kelas' => $kelas,
+            'ruang' => $ruang,
             'kode' => $kode,
-            'jurusan' => $jurusan,
+            'kelas' => $kelas,
         ];
 		return view('guru/kelas', $data);
     }
@@ -41,21 +43,21 @@ class Kelas extends BaseController
     public function tambah()
     {
         if($this->request->getMethod() == 'post'){
-            $model = new KelasModel();
-            $modelJurusan = new JurusanModel();
+            $model = new RuangKelasModel();
+            $modelKelas = new KelasModel();
             $modelMapel = new MapelModel();
 
-            $mapel = session()->get('mapel');
-            $idmapel = $modelMapel->where('mapel', $mapel)->findAll();
+            $mapel = session()->get('idmapel');
+            $idmapel = $modelMapel->where('idmapel', $mapel)->first();
 
-            $jurusan = $modelJurusan->where('idjurusan', $this->request->getPost('jurusan'))->findAll();
+            $kelas = $modelKelas->where('idkelas', $this->request->getPost('kelas'))->first();
 
-            $namakelas = $jurusan[0]['jurusan']." ".$idmapel[0]['mapel'];
+            $namaruang = $kelas['kelas']." ".$idmapel['mapel'];
             $data = [
-                'kodekelas' => $this->request->getPost('kode'),
-                'namakelas' => $namakelas,
-                'idmapel' => $idmapel[0]['idmapel'],
-                'idjurusan' => $this->request->getPost('jurusan'),
+                'koderuang' => $this->request->getPost('kode'),
+                'namaruang' => $namaruang,
+                'idmapel' => $idmapel['idmapel'],
+                'idkelas' => $this->request->getPost('kelas'),
                 'nip' => session()->get('nip'),
             ];
 
@@ -64,7 +66,7 @@ class Kelas extends BaseController
                 return redirect()->to(site_url('guru/kelas'));
             } else {
                 $error = $model->errors();
-                session()->setFlashdata('info', $error);
+                session()->setFlashdata('info', 'Gagal Menambah Kelas');
                 return redirect()->to(site_url('guru/kelas'));
             }
         }
@@ -72,33 +74,61 @@ class Kelas extends BaseController
 
     public function ruang($kode = null)
     {
-        $model = new KelasModel();
+        $model = new RuangKelasModel();
         $modelGuru = new GuruModel();
+        $modelMateri = new MateriModel();
+        $modelTugas = new TugasModel();
+        $modelUjian = new UjianModel();
+        $modelJadwal = new JadwalModel();
 
         $db = \Config\Database::connect();
 
         $nip = session()->get('nip');
 
-		$sql = "SELECT * FROM kelas WHERE kodekelas='$kode' AND nip='$nip'";
+		$sql = "SELECT * FROM ruangkelas WHERE koderuang='$kode' AND nip='$nip'";
 		$result = $db->query($sql);
 		$row = $result->getResult('array');
 
         if(empty($row)){
+            session()->setFlashdata('info', 'Kelas Tidak Ada');
             return redirect()->to(site_url('guru/kelas'));
         } else {
+            $today=date("Y-m-d");
             helper('text');
 
-            $sql = "SELECT * FROM posts WHERE kodekelas='$kode' ORDER BY tgl DESC";
-            $hasil = $db->query($sql);
-            $post = $hasil->getResult('array');
+            $ruang = $model->where('koderuang', $kode)->first();
+            $materi = $modelMateri->where('koderuang', $kode)->orderBy('tgl', 'desc')->findAll();
+            $tugas = $modelTugas->where('koderuang', $kode)->orderBy('tgl', 'desc')->findAll();
+            $ujian = $modelUjian->where('koderuang', $kode)->orderBy('tgl', 'desc')->findAll();
 
-            $kelas = $kode;
+            $jadwal = $modelJadwal->where('ruang', $kode)->findAll();
+            $statusMateri="disabled";
+            $statusTugas="disabled";
+            $statusUjian="disabled";
+            foreach ($jadwal as $key => $value) {
+                if ($today == $value['tgl']) {
+                    if ($value['jenis'] == 'Materi' && $ruang['nip'] == session()->get('nip')) {
+                        $statusMateri="";
+                    } elseif ($value['jenis'] == 'Tugas' && $ruang['nip'] == session()->get('nip')) {
+                        $statusTugas="";
+                    } elseif ($value['jenis'] == 'Ujian' && $ruang['nip'] == session()->get('nip')) {
+                        $statusUjian="";
+                    }
+                }
+            }
+
+            $kelas = $ruang['namaruang'];
             $kode = random_string('alpha', 10);
             $data = [
-                'judul' => 'Kelas '.$row[0]['namakelas'],
+                'judul' => 'Kelas '.$kelas,
                 'kode' => $kode,
-                'kelas' => $kelas,
-                'post' => $post,
+                'materi' => $materi,
+                'tugas' => $tugas,
+                'ujian' => $ujian,
+                'ruang' => $ruang,
+                'statusMateri' => $statusMateri,
+                'statusTugas' => $statusTugas,
+                'statusUjian' => $statusUjian,
             ];
             return view('guru/ruang', $data);
         }
@@ -108,11 +138,10 @@ class Kelas extends BaseController
     {
         if($this->request->getMethod() == 'post'){
             $model = new MateriModel();
-            $modelKelas = new KelasModel();
-            $modelPost = new PostModel();
+            $modelRuang = new RuangKelasModel();
 
             $kode = $this->request->getPost('kelas');
-            $kelas = $modelKelas->where('kodekelas', $kode)->first();
+            $ruang = $modelRuang->where('koderuang', $kode)->first();
 
             $file = $this->request->getFile('upload');
             $name = $file->getRandomName();
@@ -120,13 +149,12 @@ class Kelas extends BaseController
             $data = [
                 'idmateri' => $this->request->getPost('kode'),
                 'tema' => $this->request->getPost('tema'),
-                'kodekelas' => $this->request->getPost('kelas'),
+                'koderuang' => $this->request->getPost('kelas'),
                 'tipe' => $this->request->getPost('tipe'),
                 'file' => $name,
             ];
             $model->insert($data);
             if(!$model->errors()){
-                $modelPost->insert($data);
                 $file->move('./assets/upload/materi', $name);
                 return redirect()->to(site_url('guru/kelas/'.$kode));
             } else {
@@ -140,10 +168,8 @@ class Kelas extends BaseController
     public function hapusMateri($kodeKelas)
     {
         $model = new MateriModel();
-        $modelPost = new PostModel();
 
         $model->delete($_GET['idmateri']);
-        $modelPost->where('idmateri', $_GET['idmateri'])->delete();
         return redirect()->to(site_url('guru/kelas/'.$kodeKelas));
     }
 
@@ -151,18 +177,16 @@ class Kelas extends BaseController
     {
         if($this->request->getMethod() == 'post'){
             $model = new TugasModel();
-            $modelPost = new PostModel();
 
             $kode = $this->request->getPost('kelas');
             $data = [
                 'kodetugas' => $this->request->getPost('kode'),
-                'kodekelas' => $this->request->getPost('kelas'),
+                'koderuang' => $this->request->getPost('kelas'),
                 'perintah' => $this->request->getPost('perintah'),
             ];
             
             $model->insert($data);
             if(!$model->errors()){
-                $modelPost->insert($data);
                 return redirect()->to(site_url('guru/kelas/'.$kode));
             } else {
                 $error = $model->errors();
@@ -175,26 +199,27 @@ class Kelas extends BaseController
     public function tugasMurid($kodeKelas)
     {
         $model = new KumpulTugasModel();
+        $modelSiswa = new SiswaModel();
 
         $tugas = $model->where('kodetugas', $_GET['kodetugas'])->findAll();
+        $siswa = $modelSiswa->findAll();
 
         $data = [
             'judul' => 'Tugas Yang Dikumpulkan',
             'kelas' => $kodeKelas,
             'tugas' => $tugas,
+            'siswa' => $siswa,
         ];
         
         return view('guru/tugas', $data);
-        echo $kodeKelas." = ".$_GET['kodetugas'];
+        // echo $kodeKelas." = ".$_GET['kodetugas'];
     }
 
     public function hapusTugas($kodeKelas)
     {
         $model = new TugasModel();
-        $modelPost = new PostModel();
 
         $model->delete($_GET['kodetugas']);
-        $modelPost->where('kodetugas', $_GET['kodetugas'])->delete();
         return redirect()->to(site_url('guru/kelas/'.$kodeKelas));
     }
 
@@ -210,11 +235,9 @@ class Kelas extends BaseController
     {
         $model = new UjianModel();
         $modelSoal = new SoalModel();
-        $modelPost = new PostModel();
 
         $model->delete($_GET['kodeujian']);
         $modelSoal->where('kodeujian', $_GET['kodeujian'])->delete();
-        $modelPost->where('kodeujian', $_GET['kodeujian'])->delete();
         return redirect()->to(site_url('guru/kelas/'.$kodeKelas));
     }
 }

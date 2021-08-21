@@ -27,6 +27,8 @@
             <?php foreach ($soal as $key => $value) : ?>
             <a class="btn btn-primary pull-right"
                 href="<?= site_url('admin/soal/edit/' . $kode . '?idsoal=' . $value['idsoal']) ?>">Edit</a>
+            <a class="btn btn-danger pull-right"
+                href="<?= site_url('admin/soal/hapus/' . $kode . '?idsoal=' . $value['idsoal']) ?>">Edit</a>
             <p><?php echo $no . ". " . $value['soal']; ?></p>
             <div class="form-group">
                 <div class="col">
@@ -62,12 +64,19 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= site_url('admin/soal/' . $kode) ?>" method="post">
+                    <form action="<?= site_url('admin/soal/' . $kode) ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" class="form-control" name="kode" id="kode" value="<?= $kode ?>">
                         <div class="form-group row">
                             <label for="soal" class="col-sm-4 col-form-label">Soal</label>
                             <div class="col">
                                 <textarea class="form-control" name="soal" id="soal" row="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gambar" class="col-sm-4 col-form-label">Gambar</label>
+                            <div class="col">
+                                <input type="file" class="form-control-file form-control-sm" name="gambar" id="gambar"
+                                    accept="image/*">
                             </div>
                         </div>
                         <div class="form-group row">

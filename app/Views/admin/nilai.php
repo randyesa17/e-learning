@@ -21,7 +21,7 @@
         visibility: hidden;
     }
 
-    #koderuang {
+    #nis {
         visibility: hidden;
     }
 
@@ -47,10 +47,11 @@
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
                     <form action="<?= site_url('admin/nilai/cari') ?>" method="get">
-                        <select class="form-control btn" onchange="this.form.submit()" name="koderuang" id="koderuang">
-                            <option value="-1">--Pilih Ruang Kelas--</option>
-                            <?php foreach($ruang as $key => $value) : ?>
-                            <option value="<?= $value['koderuang'] ?>"><?= $value['namaruang'] ?></option>
+                        <select class="form-control btn custom-select2" onchange="this.form.submit()" name="nis"
+                            id="nis">
+                            <option value="-1">--Pilih Siswa--</option>
+                            <?php foreach($siswa as $key => $value) : ?>
+                            <option value="<?= $value['nis'] ?>"><?= $value['nama'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </form>

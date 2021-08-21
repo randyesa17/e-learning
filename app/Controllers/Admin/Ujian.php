@@ -39,7 +39,6 @@ class Ujian extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $model = new UjianModel();
-            $modelPost = new PostModel();
             helper('text');
 
             $kode = random_string('alpha', 10);
@@ -53,13 +52,6 @@ class Ujian extends BaseController
 
             $model->insert($data);
             if (!$model->errors()) {
-                $dataUjian = [
-                    'kodeujian' => $kode,
-                    'koderuang' => $this->request->getPost('ruang'),
-                    'jenisujian' => $this->request->getPost('jenis'),
-                    'tglujian' => $this->request->getPost('tgl'),
-                ];
-                $modelPost->insert($dataUjian);
                 return redirect()->to(site_url('admin/ujian'));
             } else {
                 $error = $model->errors();
@@ -82,10 +74,8 @@ class Ujian extends BaseController
     public function hapus($id = null)
     {
         $model = new UjianModel();
-        $modelPost = new PostModel();
         $modelSoal = new SoalModel();
         $model->delete($id);
-        $modelPost->where('kodeujian', $id)->delete();
         $modelSoal->where('kodeujian', $id)->delete();
 
         return redirect()->to(site_url('admin/ujian'));
@@ -128,9 +118,21 @@ class Ujian extends BaseController
     {
         $modelSoal = new SoalModel();
         if ($this->request->getMethod() == 'post') {
+
+            $file = $this->request->getFile('gambar');
+            $name = $file->getName();
+
+            if (empty($name)) {
+                $name = $this->request->getPost('gambar');
+            } else {
+                $name = $file->getRandomName();
+                $file->move('./assets/images/soal/', $name);
+            }
+
             $data = [
                 'kodeujian' => $kode,
                 'soal' => $this->request->getPost('soal'),
+                'gambar' => $name,
                 'pilA' => $this->request->getPost('pilA'),
                 'pilB' => $this->request->getPost('pilB'),
                 'pilC' => $this->request->getPost('pilC'),
@@ -157,5 +159,14 @@ class Ujian extends BaseController
             ];
             return view('admin/ubahsoal', $data);
         }
+    }
+
+    public function hapussoal($kode)
+    {
+        $model = new SoalModel();
+
+        $model->delete($this->request->getGet('idsoal'));
+
+        return redirect()->to(site_url('admin/soal/' . $kode));
     }
 }

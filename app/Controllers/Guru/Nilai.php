@@ -15,7 +15,7 @@ class Nilai extends BaseController
 
         $mapel = $modelMapel->findAll();
         foreach ($mapel as $key => $value) {
-            if ($value['mapel'] == session()->get('mapel')) {
+            if ($value['idmapel'] == session()->get('idmapel')) {
                 $pelajaran = $value['idmapel'];
             }
         }

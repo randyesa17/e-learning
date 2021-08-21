@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\NilaiModel;
-use App\Models\RuangKelasModel;
+use App\Models\SiswaModel;
 use App\Models\MapelModel;
 use App\Models\JurusanModel;
 
@@ -13,18 +13,18 @@ class Nilai extends BaseController
     public function index()
     {
         $model = new NilaiModel();
-        $modelRuang = new RuangKelasModel();
+        $modelSiswa = new SiswaModel();
         $modelMapel = new MapelModel();
         // $modelJurusan = new JurusanModel();
 
         $nilai = $model->findAll();
-        $ruang = $modelRuang->findAll();
+        $siswa = $modelSiswa->findAll();
         $mapel = $modelMapel->findAll();
         // $jurusan = $modelJurusan->findAll();
         $data = [
             'judul' => 'Daftar Nilai',
             'nilai' => $nilai,
-            'ruang' => $ruang,
+            'siswa' => $siswa,
             'mapel' => $mapel,
             // 'jurusan' => $jurusan,
         ];
@@ -35,25 +35,21 @@ class Nilai extends BaseController
     {
         $model = new NilaiModel();
         $modelMapel = new MapelModel();
-        $modelRuang = new RuangKelasModel();
+        $modelSiswa = new SiswaModel();
         // $modelJurusan = new JurusanModel();
 
-        $ruang = $modelRuang->where('koderuang', $_GET['koderuang'])->findAll();
-        $nama=$ruang[0]['namaruang'];
-
-        foreach ($ruang as $key => $value) {
-            $nilai[$key] = $model->where('nis', $value['nis'])->first();
-        }
-        
+        $nilai = $model->where('nis', $this->request->getGet('nis'))->findAll();
         $mapel = $modelMapel->findAll();
-        $ruang = $modelRuang->findAll();
+        $siswa = $modelSiswa->where('nis', $this->request->getGet('nis'))->first();
+        $nama=$siswa['nama'];
+        $siswa = $modelSiswa->findAll();
         // $jurusan = $modelJurusan->findAll();
         $data = [
             'judul' => 'Daftar Nilai '.$nama,
             'nilai' => $nilai,
             'mapel' => $mapel,
-            'ruang' => $ruang,
-            'kode' => $_GET['koderuang'],
+            'siswa' => $siswa,
+            'kode' => $this->request->getGet('nis'),
         ];
         return view('admin/nilai', $data);
         // echo $_GET['idmapel'];
@@ -61,14 +57,10 @@ class Nilai extends BaseController
 
     public function rekap()
     {
-        if (!empty($_GET['koderuang'])) {
+        if (!empty($this->request->getGet('nis'))) {
             $model = new NilaiModel();
 
-            $ruang = $modelRuang->where('koderuang', $_GET['koderuang'])->findAll();
-
-            foreach ($ruang as $key => $value) {
-                $nilai[$key] = $model->where('nis', $value['nis'])->first();
-            }
+            $nilai = $model->where('nis', $this->request->getGet('nis'))->findAll();
 
             foreach ($nilai as $key => $value) {
                 $nTugas = $value['nilaiTugas'];
@@ -79,8 +71,8 @@ class Nilai extends BaseController
                     'nilaiAkhir' => $nAkhir,
                 ];
                 $model->where('idmapel', $value['idmapel'])->set($data)->update();
-                return redirect()->to(site_url('admin/nilai/cari?koderuang='.$_GET['koderuang']));
             }
+            return redirect()->to(site_url('admin/nilai/cari?nis='.$this->request->getGet('nis')));
         } else {
             $model = new NilaiModel();
 
@@ -95,8 +87,8 @@ class Nilai extends BaseController
                     'nilaiAkhir' => $nAkhir,
                 ];
                 $model->update($value['no'], $data);
-                return redirect()->to(site_url('admin/nilai'));
             }
+            return redirect()->to(site_url('admin/nilai'));
         }
     }
 }

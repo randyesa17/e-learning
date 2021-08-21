@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Learning | Halaman Admin</title>
+    <title>E-Learning | Halaman Guru</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -65,9 +65,9 @@
                         <span class="user-name"><?= session()->get('nama') ?></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a href="<?= site_url('admin/profil') ?>" class="dropdown-item"><i class="dw dw-user1"></i>
+                        <a href="<?= site_url('guru/profil') ?>" class="dropdown-item"><i class="dw dw-user1"></i>
                             Profil</a>
-                        <a href="<?= site_url('admin/logout') ?>" class="dropdown-item"><i class="dw dw-logout"></i>
+                        <a href="<?= site_url('guru/logout') ?>" class="dropdown-item"><i class="dw dw-logout"></i>
                             Logout</a>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="<?= site_url('admin/home') ?>">
+            <a href="<?= site_url('guru') ?>">
                 <img width="50px" src="<?= site_url('assets/images/logo.png') ?>" alt="">
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -93,8 +93,13 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?= site_url('guru/jadwal') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-calendar-1"></span><span class="mtext">Jadwal</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= site_url('guru/kelas') ?>" class="dropdown-toggle no-arrow">
-                            <span class="micon dw dw-mortarboard"></span><span class="mtext">Kelas</span>
+                            <span class="micon dw dw-mortarboard"></span><span class="mtext">Ruang Kelas</span>
                         </a>
                     </li>
                     <li>

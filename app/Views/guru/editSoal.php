@@ -1,5 +1,49 @@
-<?= $this->extend('templates/admin') ?>
+<?= $this->extend('templates/guru') ?>
 <?= $this->section('content') ?>
+<style>
+.container {
+    border: 2px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+
+.lighter {
+    border-color: #dedede;
+    background-color: #f1f1f1;
+}
+
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+.time-left {
+    float: left;
+    color: #999;
+}
+</style>
+
 <div class="pd-ltr-20 xs-pd-20-10">
     <div class="min-height-200px">
         <div class="page-header">
@@ -10,24 +54,25 @@
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="<?= site_url('admin/home') ?>">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="<?= site_url('admin/ujian') ?>">Ujian</a></li>
-                            <li class="breadcrumb-item"><a href="<?= site_url('admin/soal/' . $kode) ?>">Soal Ujian</a>
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru') ?>">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru/kelas') ?>">Kelas</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru/kelas/'.$kelas) ?>">Ruang Kelas</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Ubah Soal Ujian</li>
+                            <li class="breadcrumb-item"><a
+                                    href="<?= site_url('guru/kelas/'.$kelas.'/ujian?kodeujian='.$kode) ?>">Soal
+                                    Ujian</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Soal</li>
                         </ol>
                     </nav>
-                </div>
-                <div class="col-md-6 col-sm-12 text-right">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahSoal">Tambah
-                        Soal</button>
                 </div>
             </div>
         </div>
         <div class="pd-20 card-box mb-30">
-            <form action="<?= site_url('admin/soal/edit/' . $kode . '?idsoal=' . $soal['idsoal']) ?>" method="post"
-                enctype="multipart/form-data">
+            <form action="<?= site_url('guru/kelas/' . $kode . '/ujian/edit?idsoal=' . $soal['idsoal']) ?>"
+                method="post" enctype="multipart/form-data">
                 <input type="hidden" class="form-control" name="kode" id="kode" value="<?= $kode ?>">
+                <input type="hidden" class="form-control" name="kelas" id="kelas" value="<?= $kelas ?>">
                 <input type="hidden" class="form-control" name="gambar" id="gambar" value="<?= $soal['gambar'] ?>">
                 <div class="form-group row">
                     <label for="soal" class="col-sm-4 col-form-label">Soal</label>

@@ -43,40 +43,64 @@
     color: #999;
 }
 </style>
-<h1><?= $judul ?></h1>
-<hr>
-<div class="row">
-    <div class="col">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahSoal">Tambah Soal</button>
-    </div>
-</div>
-<hr>
-<h2>Soal</h2>
-<!-- <form action="" method="post"> -->
-<?php if (!empty($soal)) : ?>
-<?php foreach ($soal as $key => $value) : ?>
-<div class="container lighter">
-    <p><?php echo $value['no'] . ". " . $value['soal']; ?></p>
-    <div class="form-group">
-        <div class="col">
-            <input type="radio" name="soal<?= $value['no'] ?>" id="soal<?= $value['no'] ?>"><?= $value['pilA'] ?>
-        </div>
-        <div class="col">
-            <input type="radio" name="soal<?= $value['no'] ?>" id="soal<?= $value['no'] ?>"><?= $value['pilB'] ?><br>
-        </div>
-        <div class="col">
-            <input type="radio" name="soal<?= $value['no'] ?>" id="soal<?= $value['no'] ?>"><?= $value['pilC'] ?><br>
-        </div>
-        <div class="col">
-            <input type="radio" name="soal<?= $value['no'] ?>" id="soal<?= $value['no'] ?>"><?= $value['pilD'] ?><br>
-        </div>
-    </div>
-    <?php endforeach; ?>
-    <?php endif; ?>
-    <!-- <a class="btn btn-danger" href="#">Hapus Semua Soal</a> -->
-    <!-- <button class="btn btn-primary" type="submit">Submit</button> -->
-    <!-- </form> -->
 
+<div class="pd-ltr-20 xs-pd-20-10">
+    <div class="min-height-200px">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="title">
+                        <h4><?= $judul ?></h4>
+                    </div>
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru') ?>">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru/kelas') ?>">Kelas</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru/kelas/'.$kelas) ?>">Ruang Kelas</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Soal Ujian</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-6 col-sm-12 text-right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahSoal">Tambah
+                        Soal</button>
+                </div>
+            </div>
+        </div>
+        <div class="pd-20 card-box mb-30">
+            <?php if (!empty($soal)) : ?>
+            <?php foreach ($soal as $key => $value) : ?>
+            <a class="btn btn-primary pull-right"
+                href="<?= site_url('guru/kelas/' . $kelas . '/ujian/edit?idsoal=' . $value['idsoal']) ?>">Edit</a>
+            <a class="btn btn-danger pull-right"
+                href="<?= site_url('guru/kelas/' . $kelas . '/ujian/hapus?idsoal=' . $value['idsoal']) ?>">Hapus</a>
+            <p><?php echo $no . ". " . $value['soal']; ?></p>
+            <img src="<?= site_url('assets/images/soal/'.$value['gambar']) ?>" alt="" style="width:150px;">
+            <div class="form-group">
+                <div class="col">
+                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                        id="soal<?= $value['idsoal'] ?>"><?= $value['pilA'] ?>
+                </div>
+                <div class="col">
+                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                        id="soal<?= $value['idsoal'] ?>"><?= $value['pilB'] ?><br>
+                </div>
+                <div class="col">
+                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                        id="soal<?= $value['idsoal'] ?>"><?= $value['pilC'] ?><br>
+                </div>
+                <div class="col">
+                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                        id="soal<?= $value['idsoal'] ?>"><?= $value['pilD'] ?><br>
+                </div>
+                <hr>
+                <?php $no++;
+                endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="tambahSoal" role="dialog">
         <div class="modal-dialog">
 
@@ -87,26 +111,20 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= site_url('guru/kelas/ujian/soal') ?>" method="post">
+                    <form action="<?= site_url('guru/kelas/ujian/soal') ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" class="form-control" name="kode" id="kode" value="<?= $kode ?>">
                         <input type="hidden" class="form-control" name="kelas" id="kelas" value="<?= $kelas ?>">
-                        <div class="form-group">
-                            <?php
-                            if (empty($soal) || $soal[0]['no'] != 1) {
-                                $no = 1;
-                            } else {
-                                foreach ($soal as $key => $value) {
-                                    $no = $value['no'] + 1;
-                                }
-                            }
-                            echo "Soal No. " . $no;
-                            ?>
-                        </div>
-                        <input type="hidden" class="form-control" name="no" id="no" value="<?= $no ?>">
                         <div class="form-group row">
                             <label for="soal" class="col-sm-4 col-form-label">Soal</label>
                             <div class="col">
                                 <textarea class="form-control" name="soal" id="soal" row="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gambar" class="col-sm-4 col-form-label">Gambar</label>
+                            <div class="col">
+                                <input type="file" class="form-control-file form-control-sm" name="gambar" id="gambar"
+                                    accept="image/*">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -156,4 +174,5 @@
 
         </div>
     </div>
-    <?= $this->endSection() ?>
+</div>
+<?= $this->endSection() ?>

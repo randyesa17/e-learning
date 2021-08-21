@@ -4,6 +4,7 @@ namespace App\Controllers\Guru;
 
 use App\Controllers\BaseController;
 use App\Models\GuruModel;
+use App\Models\JadwalModel;
 
 class Guru extends BaseController
 {
@@ -51,7 +52,7 @@ class Guru extends BaseController
           'tglLahir' => $guru['tglLahir'],
           'kelamin' => $guru['kelamin'],
           'alamat' => $guru['alamat'],
-          'mapel' => $guru['idmapel'],
+          'idmapel' => $guru['idmapel'],
           'foto' => $guru['foto'],
           'password' => $guru['password'],
           'loggedIn' => true
@@ -72,6 +73,18 @@ class Guru extends BaseController
           'guru' => $guru,
         ];
         return view('guru/profil', $data);
+    }
+
+    public function jadwal()
+    {
+        $model = new JadwalModel();
+        $jadwal = $model->orderBy('tgl', 'desc')->findAll();
+        $data = [
+          'judul' => 'Jadwal Pengajaran',
+          'jadwal' => $jadwal,
+        ];
+
+        return view('guru/jadwal', $data);
     }
 
     public function logout()

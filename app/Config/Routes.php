@@ -61,12 +61,13 @@ $routes->group('admin', function ($routes) {
 	$routes->add('inputUjian', 'Admin\Ujian::tambah', ['filter' => 'AuthAdmin']);
 	$routes->add('hapusUjian/(:any)', 'Admin\Ujian::hapus/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('soal/edit/(:any)', 'Admin\Ujian::ubahsoal/$1', ['filter' => 'AuthAdmin']);
+	$routes->add('soal/hapus/(:any)', 'Admin\Ujian::hapussoal/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('soal/(:any)', 'Admin\Ujian::soal/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal', 'Admin\Jadwal::index', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal/input', 'Admin\Jadwal::input', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal/edit/(:any)', 'Admin\Jadwal::edit/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal/hapus/(:any)', 'Admin\Jadwal::hapus/$1', ['filter' => 'AuthAdmin']);
-	// $routes->add('jadwal/isi', 'Admin\Jadwal::loadData', ['filter' => 'AuthAdmin']);
+	$routes->add('jadwal/isi', 'Admin\Jadwal::loadData');
 	// $routes->add('jadwal/event', 'Admin\Jadwal::ajax', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai', 'Admin\Nilai::index', ['filter' => 'AuthAdmin']);
 	$routes->add('nilai/cari', 'Admin\Nilai::cari', ['filter' => 'AuthAdmin']);
@@ -84,6 +85,8 @@ $routes->group('guru', function ($routes) {
 	$routes->add('kelas/tugas', 'Guru\Kelas::tugas', ['filter' => 'AuthGuru']);
 	$routes->add('kelas/ujian/soal', 'Guru\Ujian::soal', ['filter' => 'AuthGuru']);
 	$routes->add('kelas/(:any)/tugasMurid', 'Guru\Kelas::tugasMurid/$1', ['filter' => 'AuthGuru']);
+	$routes->add('kelas/(:any)/ujian/edit', 'Guru\Ujian::edit/$1', ['filter' => 'AuthGuru']);
+	$routes->add('kelas/(:any)/ujian/hapus', 'Guru\Ujian::hapus/$1', ['filter' => 'AuthGuru']);
 	$routes->add('kelas/(:any)/ujian', 'Guru\Ujian::index/$1', ['filter' => 'AuthGuru']);
 	$routes->add('kelas/(:any)/hapus/materi', 'Guru\Kelas::hapusMateri/$1', ['filter' => 'AuthGuru']);
 	$routes->add('kelas/(:any)/hapus/tugas', 'Guru\Kelas::hapusTugas/$1', ['filter' => 'AuthGuru']);
@@ -91,6 +94,7 @@ $routes->group('guru', function ($routes) {
 	$routes->add('kelas/(:any)', 'Guru\Kelas::ruang/$1', ['filter' => 'AuthGuru']);
 	$routes->add('nilai', 'Guru\Nilai::index', ['filter' => 'AuthGuru']);
 	$routes->add('nilai/tugas', 'Guru\Nilai::tugas', ['filter' => 'AuthGuru']);
+	$routes->add('jadwal', 'Guru\Guru::jadwal', ['filter' => 'AuthGuru']);
 	$routes->add('logout', 'Guru\Guru::logout', ['filter' => 'AuthGuru']);
 });
 

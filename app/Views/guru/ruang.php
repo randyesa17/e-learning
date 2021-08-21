@@ -1,110 +1,122 @@
 <?= $this->extend('templates/guru') ?>
 <?= $this->section('content') ?>
-<style>
-.container {
-    border: 2px;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 2px;
-}
-
-.lighter {
-    border-color: #dedede;
-    background-color: #f1f1f1;
-}
-
-.container::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.showback img {
-    float: left;
-    max-width: 60px;
-    width: 100%;
-    margin-right: 20px;
-    border-radius: 50%;
-}
-
-.container img.right {
-    float: right;
-    margin-left: 20px;
-    margin-right: 0;
-}
-
-.time-right {
-    float: right;
-    color: #aaa;
-}
-
-.time-left {
-    float: left;
-    color: #999;
-}
-</style>
-<h1><?= $judul ?></h1>
-<hr>
-<button type="button" class="btn btn-theme" data-toggle="modal" data-target="#tambahMateri">Upload
-    Materi</button>
-<button type="button" class="btn btn-theme" data-toggle="modal" data-target="#tambahTugas">Tambah
-    Tugas</button>
-<button type="button" class="btn btn-theme" data-toggle="modal" data-target="#tambahUjian">Tambah
-    Ujian</button>
-<hr>
-<?php if(!empty($post)) : ?>
-<?php foreach($post as $key => $value) : ?>
-<div class="showback">
-    <?php if(!empty($value['tema'])) : ?>
-    <span style="float: right"><a class="btn btn-danger btn-sm"
-            href="<?= site_url('guru/kelas/'.$kelas.'/hapus/materi?idmateri='.$value['idmateri']) ?>">Hapus</a></span>
-    <?php if($value['tipe'] == "pdf") : ?>
-    <img src="<?= site_url('assets/icons/file-text.svg') ?>" style="width:100%;">
-    <?php else : ?>
-    <img src="<?= site_url('assets/icons/film.svg') ?>" style="width:100%;">
-    <?php endif; ?>
-    <p><?= $value['tema'] ?></p>
-    <p><a href="<?= site_url('assets/upload/materi/'.$value['file']) ?>" target="_blank">Lihat file</a></p>
-    <span class="time-right"><?= date('d-m-Y h:i', strtotime($value['tgl'])) ?></span>
-    <?php endif; ?>
-
-    <?php if(!empty($value['perintah'])) : ?>
-    <span style="float: right"><a class="btn btn-danger btn-sm"
-            href="<?= site_url('guru/kelas/'.$kelas.'/hapus/tugas?kodetugas='.$value['kodetugas']) ?>">Hapus</a></span>
-    <h2 style="font-weight: bold; color:red;">Tugas!!</h2>
-    <p><?= $value['perintah'] ?></p>
-    <a href="<?= site_url('guru/kelas/'.$value['kodekelas'].'/tugasMurid?kodetugas='.$value['kodetugas']) ?>">Lihat
-        Tugas Murid</a>
-    <span class="time-right"><?= date('d-m-Y h:i', strtotime($value['tgl'])) ?></span>
-    <?php endif; ?>
-
-    <?php if(!empty($value['kodeujian'])) : ?>
-    <span style="float: right"><a class="btn btn-danger btn-sm"
-            href="<?= site_url('guru/kelas/'.$kelas.'/hapus?kodeujian='.$value['kodeujian']) ?>">Hapus</a></span>
-    <h2 style="font-weight: bold; color:green;">Ujian!!</h2>
-    <p>Ujian pada tanggal <?= $value['tglujian'] ?></p>
-    <a href="<?= site_url('guru/kelas/'.$value['kodekelas'].'/ujian?kodeujian='.$value['kodeujian']) ?>">Masuk</a>
-    <?php if($value['tglujian'] == date('Y-m-d')) : ?>
-    <?php endif; ?>
-    <span class="time-right"><?= date('d-m-Y h:i', strtotime($value['tgl'])) ?></span>
-    <?php endif; ?>
+<div class="pd-ltr-20 xs-pd-20-10">
+    <div class="min-height-200px">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="title">
+                        <h4><?= $judul ?></h4>
+                    </div>
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru') ?>">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('guru/kelas') ?>">Kelas</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Ruang Kelas</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-6 col-sm-12 text-right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahMateri"
+                        <?= $statusMateri ?>>Upload
+                        Materi</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahTugas"
+                        <?= $statusTugas ?>>Tambah
+                        Tugas</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahUjian"
+                        <?= $statusUjian ?>>Tambah
+                        Ujian</button>
+                </div>
+            </div>
+        </div>
+        <div class="pd-20 card-box mb-30">
+            <div class="tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active text-blue" data-toggle="tab" href="#materi" role="tab"
+                            aria-selected="true">Materi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-blue" data-toggle="tab" href="#tugas" role="tab"
+                            aria-selected="false">Tugas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-blue" data-toggle="tab" href="#ujian" role="tab"
+                            aria-selected="false">Ujian</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="materi" role="tabpanel">
+                        <?php foreach($materi as $key => $value) : ?>
+                        <div class="pd-20 card-box mb-30">
+                            <?php if(!empty($value['tema'])) : ?>
+                            <span style="float: right"><a class="btn btn-danger btn-sm"
+                                    href="<?= site_url('guru/kelas/'.$kode.'/hapus/materi?idmateri='.$value['idmateri']) ?>">Hapus</a></span>
+                            <?php if($value['tipe'] == "pdf") : ?>
+                            <img src="<?= site_url('assets/icons/file-text.svg') ?>" style="width: 50px;">
+                            <?php else : ?>
+                            <img src="<?= site_url('assets/icons/film.svg') ?>" style="width: 50px;">
+                            <?php endif; ?>
+                            <p><?= $value['tema'] ?></p>
+                            <p><a href="<?= site_url('assets/upload/materi/'.$value['file']) ?>" target="_blank">Lihat
+                                    file</a></p>
+                            <small><?= date('d-m-Y h:i', strtotime($value['tgl'])) ?></small>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="tab-pane fade" id="tugas" role="tabpanel">
+                        <?php foreach($tugas as $key => $value) : ?>
+                        <div class="pd-20 card-box mb-30">
+                            <?php if(!empty($value['perintah'])) : ?>
+                            <span style="float: right"><a class="btn btn-danger btn-sm"
+                                    href="<?= site_url('guru/kelas/'.$value['koderuang'].'/hapus/tugas?kodetugas='.$value['kodetugas']) ?>">Hapus</a></span>
+                            <h2 style="font-weight: bold; color:red;">Tugas!!</h2>
+                            <p><?= $value['perintah'] ?></p>
+                            <a
+                                href="<?= site_url('guru/kelas/'.$value['koderuang'].'/tugasMurid?kodetugas='.$value['kodetugas']) ?>">Lihat
+                                Tugas Murid</a><br>
+                            <small><?= date('d-m-Y h:i', strtotime($value['tgl'])) ?></small>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="tab-pane fade" id="ujian" role="tabpanel">
+                        <?php foreach($ujian as $key => $value) : ?>
+                        <div class="pd-20 card-box mb-30">
+                            <?php if(!empty($value['kodeujian'])) : ?>
+                            <span style="float: right"><a class="btn btn-danger btn-sm"
+                                    href="<?= site_url('guru/kelas/'.$value['koderuang'].'/hapus?kodeujian='.$value['kodeujian']) ?>">Hapus</a></span>
+                            <h2 style="font-weight: bold; color:green;">Ujian!!</h2>
+                            <p>Ujian pada tanggal <?= $value['tglujian'] ?></p>
+                            <a
+                                href="<?= site_url('guru/kelas/'.$value['koderuang'].'/ujian?kodeujian='.$value['kodeujian']) ?>">Masuk</a><br>
+                            <?php if($value['tglujian'] == date('Y-m-d')) : ?>
+                            <?php endif; ?>
+                            <small><?= date('d-m-Y h:i', strtotime($value['tgl'])) ?></small>
+                            <?php endif; ?>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php endforeach; ?>
-<?php endif; ?>
-
 <div class="modal fade" id="tambahMateri" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Tambah Materi</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form action="<?= site_url('guru/kelas/materi') ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" class="form-control" name="kode" id="kode" value="<?= $kode ?>">
-                    <input type="hidden" class="form-control" name="kelas" id="kelas" value="<?= $kelas ?>">
+                    <input type="hidden" class="form-control" name="kelas" id="kelas"
+                        value="<?= $ruang['koderuang'] ?>">
                     <div class="form-group row">
                         <label for="tema" class="col-sm-2 col-form-label">Tema</label>
                         <div class="col-sm-10">
@@ -145,13 +157,14 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Tambah Tugas</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form action="<?= site_url('guru/kelas/tugas') ?>" method="post">
                     <input type="hidden" class="form-control" name="kode" id="kode" value="<?= $kode ?>">
-                    <input type="hidden" class="form-control" name="kelas" id="kelas" value="<?= $kelas ?>">
+                    <input type="hidden" class="form-control" name="kelas" id="kelas"
+                        value="<?= $ruang['koderuang'] ?>">
                     <div class="form-group row">
                         <label for="perintah" class="col-sm-2 col-form-label">Perintah</label>
                         <div class="col-sm-10">
@@ -176,13 +189,14 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Tambah Ujian</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form action="<?= site_url('guru/kelas/'.$kelas.'/ujian') ?>" method="post">
+                <form action="<?= site_url('guru/kelas/'.$ruang['koderuang'].'/ujian') ?>" method="post">
                     <input type="hidden" class="form-control" name="kode" id="kode" value="<?= $kode ?>">
-                    <input type="hidden" class="form-control" name="kelas" id="kelas" value="<?= $kelas ?>">
+                    <input type="hidden" class="form-control" name="kelas" id="kelas"
+                        value="<?= $ruang['koderuang'] ?>">
                     <div class="form-group row">
                         <label for="tgl" class="col-sm-5 col-form-label">Ujian Untuk Tanggal</label>
                         <div class="col-sm-6">
