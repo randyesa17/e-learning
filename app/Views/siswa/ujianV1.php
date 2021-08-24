@@ -63,7 +63,7 @@
                     </nav>
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
-                    Waktu :<p id="demo"></p>
+                    Timer :<span id="timer"></span>
                 </div>
             </div>
         </div>
@@ -102,33 +102,67 @@
 </div>
 
 <script>
-// Mengatur waktu akhir perhitungan mundur
-var countDownDate = new Date("<?= date('M d, Y h:i:s', strtotime($tglselesai)) ?>").getTime();
+var test = 1 * (<?= $no ?> - 1);
+// localStorage.clear();
+document.addEventListener('DOMContentLoaded', function() {
 
-// Memperbarui hitungan mundur setiap 1 detik
-var x = setInterval(function() {
-
-    // Untuk mendapatkan tanggal dan waktu hari ini
-    var now = new Date().getTime();
-
-    // Temukan jarak antara sekarang dan tanggal hitung mundur
-    var distance = countDownDate - now;
-
-    // Perhitungan waktu untuk hari, jam, menit dan detik
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Keluarkan hasil dalam elemen dengan id = "demo"
-    document.getElementById("demo").innerHTML = hours + "Jam " +
-        minutes + "Menit " + seconds + "Detik ";
-
-    // Jika hitungan mundur selesai, tulis beberapa teks 
-    if (distance < 0) {
-        clearInterval(x);
-        alert("Waktu Sudah Habis!");
-        document.getElementById("ujian").submit();
+    if (typeof localStorage.getItem("min") !== 'undefined' && typeof localStorage.getItem("sec") !==
+        'undefined' &&
+        localStorage.getItem("min") != null && localStorage.getItem("sec") != null) {
+        var min = localStorage.getItem("min");
+        var sec = localStorage.getItem("sec");
+    } else {
+        console.log("c2");
+        var min = "0" + test;
+        var sec = "0" + 5;
     }
-}, 1000);
+    var time;
+
+    setInterval(function() {
+
+        localStorage.setItem("min", min);
+        localStorage.setItem("sec", sec);
+        time = min + " : " + sec;
+        document.getElementById("timer").innerHTML = time;
+        if (sec == 00) {
+            if (min != 0) {
+                min--;
+                sec = 59;
+                if (min < 10) {
+                    min = "0" + min;
+                }
+            } else {
+                alert("Waktu Sudah Habis!");
+                localStorage.clear();
+                document.getElementById("ujian").submit();
+            }
+        } else {
+            sec--;
+            if (sec < 10) {
+                sec = "0" + sec;
+            }
+        }
+    }, 1000);
+});
+
+
+// var count = 90 * <?= $total ?>;
+// var interval = setInterval(function() {
+//     var hours = parseInt(count / 3600) % 24;
+//     var minutes = parseInt(count / 60) % 60;
+//     var seconds = count % 60;
+//     var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (
+//         seconds < 10 ? "0" + seconds : seconds);
+
+//     document.getElementById('count').innerHTML = result;
+//     count--;
+//     if (count === 0) {
+//         clearInterval(interval);
+//         document.getElementById('count').innerHTML = 'Done';
+//         // or...
+//         alert("You're out of time!");
+//         document.getElementById("ujian").submit();
+//     }
+// }, 1000);
 </script>
 <?= $this->endSection() ?>

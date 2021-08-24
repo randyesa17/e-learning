@@ -3,20 +3,25 @@
 namespace App\Controllers\Siswa;
 
 use App\Controllers\BaseController;
-use App\Models\KelasModel;
+use App\Models\RuangKelasModel;
 use App\Models\KumpulTugasModel;
+use App\Models\MateriModel;
+use App\Models\TugasModel;
+use App\Models\UjianModel;
+use App\Models\NilaiModel;
+use App\Models\PengerjaanModel;
 
 class Kelas extends BaseController
 {
     public function index()
     {
-        $model = new KelasModel();
+        $model = new RuangKelasModel();
 
-        $kelas = $model->where('nis', session()->get('nis'))->findAll();
+        $ruang = $model->where('nis', session()->get('nis'))->findAll();
 
         $data = [
             'judul' => 'Kelas',
-            'kelas' => $kelas,
+            'ruang' => $ruang,
         ];
 		return view('siswa/kelas', $data);
     }
@@ -24,27 +29,33 @@ class Kelas extends BaseController
     public function tambah()
     {
         if ($this->request->getMethod() == "post") {
-            $model = new KelasModel();
+            $model = new RuangKelasModel();
             
-            $kelas = $model->where('kodekelas', $this->request->getPost('kode'))->first();
+            $kelas = $model->where([
+                    'koderuang' => $this->request->getPost('kode'),
+                    'idkelas' => session()->get('idkelas'),
+                ])->first();
             
-            if (empty($kelas[0]['nis'])) {
+            if (empty($kelas)) {
+                session()->setFlashdata('info', 'Ruang Kelas Bukan Untuk Kelas Anda');
+                return redirect()->to(site_url('siswa/kelas'));
+            } elseif (empty($kelas['nis'])) {
                 $data = [
                     'nis' => session()->get('nis'),
                 ];
                 $model->update($this->request->getPost('kode'), $data);
                 return redirect()->to(site_url('siswa/kelas'));
             } else {
-                if (!empty($model->where(['nis' => session()->get('nis'), 'kodekelas' => $this->request->getPost('kode')])->first())) {
-                    session()->setFlashdata('info', 'Anda Sudah Gabung Kelas Berikut');
+                if (!empty($model->where(['nis' => session()->get('nis'), 'koderuang' => $this->request->getPost('kode')])->first())) {
+                    session()->setFlashdata('info', 'Anda Sudah Gabung Ruang Kelas Tersebut');
                     return redirect()->to(site_url('siswa/kelas'));
                 } else {
                     $data = [
-                        'kodekelas' => $this->request->getPost('kode'),
-                        'namakelas' => $kelas[0]['namakelas'],
-                        'idmapel' => $kelas[0]['idmapel'],
-                        'idjurusan' => $kelas[0]['idjurusan'],
-                        'nip' => $kelas[0]['nip'],
+                        'koderuang' => $this->request->getPost('kode'),
+                        'namaruang' => $kelas['namaruang'],
+                        'idmapel' => $kelas['idmapel'],
+                        'idjurusan' => $kelas['idjurusan'],
+                        'nip' => $kelas['nip'],
                         'nis' => session()->get('nis'),
                     ];
         
@@ -58,14 +69,19 @@ class Kelas extends BaseController
 
     public function ruang($kodekelas)
     {
-        $model = new KelasModel();
+        $model = new RuangKelasModel();
+        $modelMateri = new MateriModel();
+        $modelTugas = new TugasModel();
+        $modelUjian = new UjianModel();
+        $modelPengerjaan = new PengerjaanModel();
         
-        $kelas = $model->where(['nis' => session()->get('nis'), 'kodekelas' => $kodekelas])->first();
+        $kelas = $model->where(['nis' => session()->get('nis'), 'koderuang' => $kodekelas])->first();
 
         if (empty($kelas)) {
             return redirect()->to(site_url('siswa/kelas'));
         } else {
             $modelKumpul = new KumpulTugasModel();
+            $modelNilai = new NilaiModel();
 
             if(!empty($modelKumpul->where(['nis' => session()->get('nis'), 'kodekelas' => $kodekelas])->first()))
             {
@@ -73,16 +89,35 @@ class Kelas extends BaseController
             } else {
                 $kumpul = false;
             }
-            
-            $db = \Config\Database::connect();
-            $sql = "SELECT * FROM posts WHERE kodekelas='$kodekelas' ORDER BY tgl DESC";
-            $hasil = $db->query($sql);
-            $post = $hasil->getResult('array');
+
+            $ruang = $model->where('koderuang', $kodekelas)->first();
+            $materi = $modelMateri->where('koderuang', $kodekelas)->orderBy('tgl', 'desc')->findAll();
+            $tugas = $modelTugas->where('koderuang', $kodekelas)->orderBy('tgl', 'desc')->findAll();
+            $ujian = $modelUjian->where('koderuang', $kodekelas)->orderBy('tgl', 'desc')->findAll();
+
+            if(!empty($modelNilai->where(['nis' => session()->get('nis'), 'idmapel' => $ruang['idmapel'], 'nilaiUjian !=' => ''])->first()))
+            {
+                $pengerjaan = true;
+            } else {
+                $pengerjaan = false;
+            }
+
+            foreach ($ujian as $key => $value) {
+                if (!empty($modelPengerjaan->where(['nis' => session()->get('nis'), 'kodeujian' => $value['kodeujian'], 'nilai !=' => 0])->first())) {
+                    $ujian[$key]['sudah'] = true;
+                } else {
+                    $ujian[$key]['sudah'] = false;
+                }
+            }
+
             $data = [
-                'judul' => 'Kelas '.$kelas['namakelas'],
+                'judul' => 'Kelas '.$ruang['namaruang'],
                 'kode' => $kodekelas,
-                'post' => $post,
+                'materi' => $materi,
+                'tugas' => $tugas,
+                'ujian' => $ujian,
                 'kumpul' => $kumpul,
+                'pengerjaan' => $pengerjaan,
             ];
             return view('siswa/ruang', $data);
         }

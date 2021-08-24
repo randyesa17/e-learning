@@ -102,6 +102,7 @@ $routes->group('siswa', function ($routes) {
 	$routes->add('login', 'Siswa\Siswa::login');
 	$routes->add('/', 'Siswa\Siswa::index', ['filter' => 'AuthSiswa']);
 	$routes->add('kelas', 'Siswa\Kelas::index', ['filter' => 'AuthSiswa']);
+	$routes->add('jadwal', 'Siswa\Siswa::jadwal', ['filter' => 'AuthSiswa']);
 	$routes->add('kelas/tambah', 'Siswa\Kelas::tambah', ['filter' => 'AuthSiswa']);
 	$routes->add('kelas/(:any)/tugas', 'Siswa\Kelas::tugas/$1', ['filter' => 'AuthGuru']);
 	$routes->add('kelas/(:any)/ujian', 'Siswa\Ujian::index/$1', ['filter' => 'AuthGuru']);

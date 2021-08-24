@@ -34,7 +34,15 @@
                     <tr>
                         <td width="200">Jurusan</td>
                         <td width="5">:</td>
-                        <td><?= session()->get('mapel') ?></td>
+                        <td>
+                            <?php
+                            foreach ($mapel as $key => $value) {
+                                if ($value['idmapel'] == session()->get('mapel')) {
+                                    echo $value['mapel'];
+                                }
+                            }
+                            ?>
+                        </td>
                     </tr>
                 </table>
                 </p>

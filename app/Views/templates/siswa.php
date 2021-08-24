@@ -7,121 +7,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Learning | Halaman Siswa</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/bootstrap.css') ?>">
-    <!--external css-->
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/font-awesome/css/font-awesome.css') ?>">
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/zabuto_calendar.css') ?>" type="text/css">
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/js/gritter/css/jquery.gritter.css') ?>" type="text/css">
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/lineicons/style.css') ?>" type="text/css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style.css') ?>">
-    <link rel="stylesheet" href="<?= site_url('assets/dashgum/css/style-responsive.css') ?>">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="<?= site_url('assets/deskapp/vendors/styles/core.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= site_url('assets/deskapp/vendors/styles/icon-font.min.css') ?>">
+    <link rel="stylesheet" type="text/css"
+        href="<?= site_url('assets/deskapp/src/plugins/datatables/css/dataTables.bootstrap4.min.css') ?>">
+    <link rel="stylesheet" type="text/css"
+        href="<?= site_url('assets/deskapp/src/plugins/datatables/css/responsive.bootstrap4.min.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= site_url('assets/deskapp/vendors/styles/style.css') ?>">
+    <link rel="stylesheet" type="text/css"
+        href="<?= site_url('assets/deskapp/src/plugins/fullcalendar/fullcalendar.css') ?>">
 
-    <script src="<?= site_url('assets/dashgum/js/chart-master/Chart.js') ?>"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-119386393-1');
+    </script>
 </head>
 
 <body>
-    <section id="container">
-        <!-- **********************************************************************************************************************************************************
-        TOP BAR CONTENT & NOTIFICATIONS
-        *********************************************************************************************************************************************************** -->
-        <!--header start-->
-        <header class="header black-bg">
-            <div class="sidebar-toggle-box">
-                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+    <div class="pre-loader">
+        <div class="pre-loader-box">
+            <div class="loader-logo"><img width="150px" src="<?= site_url('assets/images/logo.png') ?>" alt=""></div>
+            <div class="loader-progress" id="progress_div">
+                <div class='bar' id='bar1'></div>
             </div>
-            <!--logo start-->
-            <a href="<?= site_url('siswa') ?>" class="logo"><b>Halaman Siswa</b></a>
-            <!-- logo end -->
-            <div class="top-menu">
-                <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="<?= site_url('siswa/logout') ?>">Logout</a></li>
+            <div class='percent' id='percent1'>0%</div>
+            <div class="loading-text">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="header-left">
+            <div class="menu-icon dw dw-menu"></div>
+        </div>
+        <div class="header-right">
+            <div class="user-info-dropdown">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <span class="user-icon">
+                            <img style="width:50px; height:50px"
+                                src="<?= site_url('assets/images/siswa/').session()->get('foto') ?>" alt="">
+                        </span>
+                        <span class="user-name"><?= session()->get('nama') ?></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a href="<?= site_url('siswa/logout') ?>" class="dropdown-item"><i class="dw dw-logout"></i>
+                            Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="left-side-bar">
+        <div class="brand-logo">
+            <a href="<?= site_url('siswa') ?>">
+                <img width="50px" src="<?= site_url('assets/images/logo.png') ?>" alt="">
+            </a>
+            <div class="close-sidebar" data-toggle="left-sidebar-close">
+                <i class="ion-close-round"></i>
+            </div>
+        </div>
+        <div class="menu-block customscroll">
+            <div class="sidebar-menu">
+                <ul id="accordion-menu">
+                    <li>
+                        <a href="<?= site_url('siswa') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-house-1"></span><span class="mtext">Beranda</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= site_url('siswa/jadwal') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-calendar-1"></span><span class="mtext">Jadwal</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= site_url('siswa/kelas') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-mortarboard"></span><span class="mtext">Ruang Kelas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= site_url('siswa/nilai') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-book-1"></span><span class="mtext">Nilai</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
-        </header>
-        <!--header end-->
-        <?php
-        $uri = service('uri');
-        ?>
-        <!-- **********************************************************************************************************************************************************
-        MAIN SIDEBAR MENU
-        *********************************************************************************************************************************************************** -->
-        <!--sidebar start-->
-        <aside>
-            <div class="nav-collapse" id="sidebar">
-                <!-- sidebar menu start -->
-                <ul class="sidebar-menu" id="nav-accordion">
-                    <p class="centered"><img src="<?= site_url('assets/images/siswa/'.session()->get('foto')) ?>"
-                            class="img-circle" width="60" height="60"></p>
-                    <h5 class="centered"><?= session()->get('nama') ?></h5>
+        </div>
+    </div>
+    <div class="mobile-menu-overlay"></div>
 
-                    <li class="mt">
-                        <a href="<?= site_url('siswa') ?>" class="<?= ($uri->getSegment(2) == '' ? 'active' : null) ?>">
-                            <i class="fa fa-dashboard"></i>
-                            <span>Beranda</span>
-                        </a>
-                    </li>
+    <div class="main-container">
+        <?= $this->renderSection('content') ?>
+    </div>
 
-                    <li class="mt">
-                        <a href="<?= site_url('siswa/kelas') ?>"
-                            class="<?= ($uri->getSegment(2) == 'kelas' ? 'active' : null) ?>">
-                            <i class="fa fa-group"></i>
-                            <span>Kelas</span>
-                        </a>
-                    </li>
-
-                    <li class="mt">
-                        <a href="<?= site_url('siswa/nilai') ?>"
-                            class="<?= ($uri->getSegment(2) == 'nilai' ? 'active' : null) ?>">
-                            <i class="fa fa-book"></i>
-                            <span>Nilai</span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- sidebar menu end-->
-            </div>
-        </aside>
-        <!--sidebar end-->
-
-        <!-- **********************************************************************************************************************************************************
-        MAIN CONTENT
-        *********************************************************************************************************************************************************** -->
-        <!--main content start-->
-        <section id="main-content">
-            <section class="wrapper">
-                <?= $this->renderSection('content') ?>
-            </section>
-        </section>
-        <!--main content end-->
-
-        <!--footer start-->
-        <footer class="site-footer">
-            <div class="text-center">
-                2021 - Esa
-                <a href="#" class="go-top">
-                    <i class="fa fa-angle-up"></i>
-                </a>
-            </div>
-        </footer>
-    </section>
-
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="<?= site_url('assets/dashgum/js/jquery.js') ?>"></script>
-    <script src="<?= site_url('assets/dashgum/js/jquery-1.8.3.min.js') ?>"></script>
-    <script src="<?= site_url('assets/dashgum/js/bootstrap.min.js') ?>"></script>
-    <script src="<?= site_url('assets/dashgum/js/jquery.dcjqaccordion.2.7.js') ?>" class="include"
-        type="text/javascript"></script>
-    <script src="<?= site_url('assets/dashgum/js/jquery.scrollTo.min.js') ?>"></script>
-    <script src="<?= site_url('assets/dashgum/js/jquery.nicescroll.js') ?>" type="text/javascript"></script>
-    <script src="<?= site_url('assets/dashgum/js/jquery.sparkline.js') ?>"></script>
-
-    <!--common script for all pages-->
-    <script src="<?= site_url('assets/dashgum/js/common-scripts.js') ?>"></script>
-
-    <script src="<?= site_url('assets/dashgum/js/gritter/js/jquery.gritter.js') ?>" type="text/javascript"></script>
-    <script src="<?= site_url('assets/dashgum/js/gritter.conf.js') ?>" type="text/javascript"></script>
+    <!-- js -->
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/core.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/script.min.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/process.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/layout-settings.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/src/plugins/apexcharts/apexcharts.min.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/src/plugins/datatables/js/jquery.dataTables.min.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/src/plugins/datatables/js/dataTables.bootstrap4.min.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/src/plugins/datatables/js/dataTables.responsive.min.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/vendors/scripts/dashboard.js') ?>"></script>
+    <script src="<?= site_url('assets/deskapp/src/plugins/fullcalendar/fullcalendar.min.js') ?>"></script>
+    <!-- <script src="<?= site_url('assets/deskapp/vendors/scripts/calendar-setting.js') ?>"></script> -->
+    <script src="<?= site_url('assets/js/pengaturan-kalender.js') ?>"></script>
 </body>
 
 </html>

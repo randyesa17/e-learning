@@ -1,83 +1,53 @@
 <?= $this->extend('templates/siswa') ?>
 <?= $this->section('content') ?>
-<div class="row text-center">
-    <div class="col">
-        <h1><?= $judul ?></h1>
+<div class="pd-ltr-20">
+    <div class="card-box pd-20 height-100-p mb-30">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <img src="<?= site_url('assets/images/siswa/').session()->get('foto') ?>" alt="">
+            </div>
+            <div class="col-md-8">
+                <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                    Selamat Datang <div class="weight-600 font-30 text-blue"><?= session()->get('nama') ?>!</div>
+                    <?= session()->get('nis') ?>
+                </h4>
+                <p class="font-18 max-width-600">
+                <table class="table table-borderless">
+                    <tr>
+                        <td width="200">Tempat, Tanggal Lahir</td>
+                        <td width="5">:</td>
+                        <td>
+                            <?= session()->get('tempatLahir') ?>,
+                            <?= date("d-F-Y", strtotime(session()->get('tglLahir'))) ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200">Jenis Kelamin</td>
+                        <td width="5">:</td>
+                        <td><?= session()->get('kelamin') ?></td>
+                    </tr>
+                    <tr>
+                        <td width="200">Alamat</td>
+                        <td width="5">:</td>
+                        <td><?= session()->get('alamat') ?></td>
+                    </tr>
+                    <tr>
+                        <td width="200">Kelas</td>
+                        <td width="5">:</td>
+                        <td>
+                            <?php
+                            foreach ($kelas as $key => $value) {
+                                if ($value['idkelas'] == session()->get('idkelas')) {
+                                    echo $value['kelas'];
+                                }
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
-<hr>
-<div class="row text-center">
-    <div class="col">
-        <img width="150px" src="<?= site_url('assets/images/siswa/').session()->get('foto') ?>"
-            class="rounded-circle img-fluid img-thumbnail" alt="<?= session()->get('nama') ?>">
-    </div>
-</div>
-<hr>
-<div class="row text-center">
-    <div class="col">
-        <h4><?= session()->get('nis') ?></h4>
-    </div>
-</div>
-<div class="row text-center">
-    <div class="col">
-        <h4><?= session()->get('nama') ?></h4>
-    </div>
-</div>
-<table class="table table-borderless">
-    <tr>
-        <td width="200">
-            <h5>NISN</h5>
-        </td>
-        <td width="5">
-            <h5>:</h5>
-        </td>
-        <td>
-            <h5><?= session()->get('nisn') ?></h5>
-        </td>
-    </tr>
-    <tr>
-        <td width="200">
-            <h5>Tempat, Tanggal Lahir</h5>
-        </td>
-        <td width="5">
-            <h5>:</h5>
-        </td>
-        <td>
-            <h5><?= session()->get('tempatLahir') ?>, <?= date("d-F-Y", strtotime(session()->get('tglLahir'))) ?></h5>
-        </td>
-    </tr>
-    <tr>
-        <td width="200">
-            <h5>Jenis Kelamin</h5>
-        </td>
-        <td width="5">
-            <h5>:</h5>
-        </td>
-        <td>
-            <h5><?= session()->get('kelamin') ?></h5>
-        </td>
-    </tr>
-    <tr>
-        <td width="200">
-            <h5>Alamat</h5>
-        </td>
-        <td width="5">
-            <h5>:</h5>
-        </td>
-        <td>
-            <h5><?= session()->get('alamat') ?></h5>
-        </td>
-    </tr>
-    <tr>
-        <td width="200">
-            <h5>Jurusan</h5>
-        </td>
-        <td width="5">
-            <h5>:</h5>
-        </td>
-        <td>
-            <h5><?= session()->get('jurusan') ?></h5>
-        </td>
-    </tr>
-</table>
 <?= $this->endSection() ?>

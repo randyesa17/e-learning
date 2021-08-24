@@ -7,60 +7,92 @@ use App\Models\UjianModel;
 use App\Models\SoalModel;
 use App\Models\PostModel;
 use App\Models\NilaiModel;
+use App\Models\RuangKelasModel;
+use App\Models\PengerjaanModel;
 
 class Ujian extends BaseController
 {
     public function index($kodeKelas)
     {
+        $modelPengerjaan = new PengerjaanModel();
         $db = \Config\Database::connect();
 
         if($this->request->getMethod() == 'post'){
             $kode = $_GET['kodeujian'];
             $sql = "SELECT * FROM soal WHERE kodeujian='$kode'";
             $hasil = $db->query($sql);
+            $result = $hasil->getResult('array');
             $hitung = $hasil->getNumRows();
             $nilaiSoal = 100/$hitung;
             $nilai = 0;
             $benar = 0;
 
-            for ($i=0; $i < $hitung; $i++) { 
-                $no = $i+1;
-                $sql = "SELECT * FROM soal WHERE kodeujian='$kode' AND no='$no'";
-                $hasil = $db->query($sql);
-                $soal = $hasil->getResult('array');
-                if ($this->request->getPost('soal'.$no) == $soal[0]['kunci']) {
+            foreach ($result as $key => $value) {
+                if ($this->request->getPost('soal'.$value['idsoal']) == $value['kunci']) {
                     $benar = $benar + 1;
                     $nilai = $benar * $nilaiSoal;
                 }
             }
 
             $model = new NilaiModel();
-            $sql = "SELECT * FROM kelas WHERE kodekelas='$kodeKelas'";
-            $hasil = $db->query($sql);
-            $mapel = $hasil->getResult('array');
+            $modelRuang = new RuangKelasModel();
+            $mapel = $modelRuang->where('koderuang', $kodeKelas)->first();
+            $Arrnilai = $model->where('idmapel', $mapel['idmapel'])->first();
+            if (!empty($Arrnilai)) {
+                $data = [
+                    'nilaiUjian' => $nilai,
+                ];
+                $model->update($Arrnilai['no'], $data);
+            } else {
+                $data = [
+                    'nis' => session()->get('nis'),
+                    'idmapel' => $mapel['idmapel'],
+                    'nilaiUjian' => $nilai,
+                ];
+                $model->insert($data);
+            }
             $data = [
-                'nis' => session()->get('nis'),
-                'idmapel' => $mapel[0]['idmapel'],
-                'nilaiUjian' => $nilai,
+                'nilai' => $nilai,
             ];
-            $model->insert($data);
+            $pengerjaan = $modelPengerjaan->where('kodeujian', $kode)->first();
+            $modelPengerjaan->update($pengerjaan['no'], $data);
             return redirect()->to(site_url('siswa/nilai'));
-            // print_r($data);
+            // print_r($this->request->getPost());
         } else {
             $model = new SoalModel();
+            $modelPengerjaan = new PengerjaanModel();
 
             $kode = $_GET['kodeujian'];
-            $sql = "SELECT * FROM soal WHERE kodeujian='$kode' ORDER BY no ASC";
+            $sql = "SELECT * FROM soal WHERE kodeujian='$kode' ORDER BY RAND()";
             $hasil = $db->query($sql);
             $soal = $hasil->getResult('array');
             $total = $hasil->getNumRows();
             
+            $waktuSekarang = date("Ymdhis");
+            $waktuUjian = $total * 90;
+            $menit = $waktuUjian/60;
+            $detik = $waktuUjian%60;
+            $menitend = date("i") + $menit;
+            $detikend = date("s") + $detik;
+            // $waktuSekarang->add(new DateInterval('PT'.$menit.'M'.$detik.'S'));
+            $limitwaktu = date("Ymdhis", strtotime($waktuSekarang." + ".$menit." minute + ".$detik." second"));
+            $tglselesai = date("Y-m-d h:i:s", strtotime($limitwaktu));
+            // echo "<pre>";
+            // print_r($hasil);
+            $tambah = [
+                'nis' => session()->get('nis'),
+                'kodeujian' => $_GET['kodeujian'],
+                'tglselesai' => $tglselesai,
+            ];
+            $modelPengerjaan->insert($tambah);
             $data = [
                 'judul' => 'Ujian',
                 'kode' => $_GET['kodeujian'],
                 'soal' => $soal,
                 'total' => $total,
+                'tglselesai' => $tglselesai,
                 'kelas' => $kodeKelas,
+                'no' => 1,
             ];
             return view('siswa/ujian', $data);
         }
