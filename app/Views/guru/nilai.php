@@ -15,6 +15,17 @@
                         </ol>
                     </nav>
                 </div>
+                <div class="col-md-6 col-sm-12 text-right">
+                    <form action="<?= site_url('guru/nilai/cari') ?>" method="get">
+                        <select class="form-control btn custom-select2" onchange="this.form.submit()" name="ruang"
+                            id="ruang">
+                            <option value="-1">--Pilih Ruang Kelas--</option>
+                            <?php foreach($ruang as $key => $value) : ?>
+                            <option value="<?= $value['koderuang'] ?>"><?= $value['namaruang'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="pd-20 card-box mb-30">
@@ -27,6 +38,7 @@
                         <th width="25%">Nilai Ujian</th>
                         <th colspan="2" width="25%">Nilai Akhir</th>
                     </tr>
+                    <?php if (!empty($nilai)) : ?>
                     <?php $no = 1; foreach($nilai as $key => $value) : ?>
                     <tr class="text-center">
                         <td><?= $no++ ?></td>
@@ -35,8 +47,9 @@
                         <td colspan="2"><?= $value['nilaiTugas'] ?></td>
                         <?php else : ?>
                         <td>Belum Ada</td>
-                        <td><a href="#" data-toggle="modal" data-target="#tugas">[Masukkan Nilai]</a></td>
-                        <div class="modal fade" id="tugas" role="dialog">
+                        <td><a href="#" data-toggle="modal" data-target="#tugas<?= $value['nis'] ?>">[Masukkan
+                                Nilai]</a></td>
+                        <div class="modal fade" id="tugas<?= $value['nis'] ?>" role="dialog">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
@@ -84,6 +97,7 @@
                         <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
+                    <?php endif; ?>
                 </table>
             </div>
         </div>

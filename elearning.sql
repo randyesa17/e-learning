@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 21, 2021 at 02:25 PM
+-- Generation Time: Aug 24, 2021 at 07:22 AM
 -- Server version: 8.0.22
 -- PHP Version: 7.4.14
 
@@ -154,7 +154,23 @@ CREATE TABLE IF NOT EXISTS `nilai` (
   `nilaiUjian` int DEFAULT NULL,
   `nilaiAkhir` int DEFAULT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengerjaanujian`
+--
+
+DROP TABLE IF EXISTS `pengerjaanujian`;
+CREATE TABLE IF NOT EXISTS `pengerjaanujian` (
+  `no` int NOT NULL AUTO_INCREMENT,
+  `nis` varchar(15) NOT NULL,
+  `kodeujian` varchar(10) NOT NULL,
+  `tglselesai` datetime NOT NULL,
+  `nilai` int DEFAULT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 

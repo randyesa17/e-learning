@@ -50,6 +50,10 @@ class Ujian extends BaseController
                 'tgl' => $this->request->getPost('tgl'),
             ];
 
+            $rules = [
+                'koderuang' => 'is_unique[ujian.koderuang]'
+            ];
+            $model->setValidationRules($rules);
             $model->insert($data);
             if (!$model->errors()) {
                 return redirect()->to(site_url('admin/ujian'));

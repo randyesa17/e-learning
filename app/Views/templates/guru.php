@@ -65,8 +65,6 @@
                         <span class="user-name"><?= session()->get('nama') ?></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a href="<?= site_url('guru/profil') ?>" class="dropdown-item"><i class="dw dw-user1"></i>
-                            Profil</a>
                         <a href="<?= site_url('guru/logout') ?>" class="dropdown-item"><i class="dw dw-logout"></i>
                             Logout</a>
                     </div>

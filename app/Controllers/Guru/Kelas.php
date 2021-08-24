@@ -99,22 +99,26 @@ class Kelas extends BaseController
             $ruang = $model->where('koderuang', $kode)->first();
             $materi = $modelMateri->where('koderuang', $kode)->orderBy('tgl', 'desc')->findAll();
             $tugas = $modelTugas->where('koderuang', $kode)->orderBy('tgl', 'desc')->findAll();
-            $ujian = $modelUjian->where('koderuang', $kode)->orderBy('tgl', 'desc')->findAll();
+            $ujian = $modelUjian->where('koderuang', $kode)->orderBy('tgl', 'desc')->first();
 
             $jadwal = $modelJadwal->where('ruang', $kode)->findAll();
             $statusMateri="disabled";
             $statusTugas="disabled";
-            $statusUjian="disabled";
+            $statusUjian="";
             foreach ($jadwal as $key => $value) {
                 if ($today == $value['tgl']) {
                     if ($value['jenis'] == 'Materi' && $ruang['nip'] == session()->get('nip')) {
                         $statusMateri="";
                     } elseif ($value['jenis'] == 'Tugas' && $ruang['nip'] == session()->get('nip')) {
                         $statusTugas="";
-                    } elseif ($value['jenis'] == 'Ujian' && $ruang['nip'] == session()->get('nip')) {
-                        $statusUjian="";
                     }
                 }
+            }
+
+            if (!empty($ujian)) {
+                $statusUjian="disabled";
+            } else {
+                $statusUjian="";
             }
 
             $kelas = $ruang['namaruang'];

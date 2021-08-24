@@ -5,13 +5,19 @@ namespace App\Controllers\Guru;
 use App\Controllers\BaseController;
 use App\Models\GuruModel;
 use App\Models\JadwalModel;
+use App\Models\MapelModel;
 
 class Guru extends BaseController
 {
     public function index()
     {
+    		$modelMapel = new MapelModel();
+
+        $mapel = $modelMapel->findAll();
+
         $data = [
-          'judul' => 'Selamat datang '.session()->get('nama'),
+          'judul' => 'Selamat datang '.session()->get('idmapel'),
+          'mapel' => $mapel,
         ];
 
 		    return view('guru/home', $data);

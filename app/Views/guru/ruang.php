@@ -82,21 +82,19 @@
                         <?php endforeach; ?>
                     </div>
                     <div class="tab-pane fade" id="ujian" role="tabpanel">
-                        <?php foreach($ujian as $key => $value) : ?>
                         <div class="pd-20 card-box mb-30">
-                            <?php if(!empty($value['kodeujian'])) : ?>
+                            <?php if(!empty($ujian['kodeujian'])) : ?>
                             <span style="float: right"><a class="btn btn-danger btn-sm"
-                                    href="<?= site_url('guru/kelas/'.$value['koderuang'].'/hapus?kodeujian='.$value['kodeujian']) ?>">Hapus</a></span>
+                                    href="<?= site_url('guru/kelas/'.$ujian['koderuang'].'/hapus?kodeujian='.$ujian['kodeujian']) ?>">Hapus</a></span>
                             <h2 style="font-weight: bold; color:green;">Ujian!!</h2>
-                            <p>Ujian pada tanggal <?= $value['tglujian'] ?></p>
+                            <p>Ujian pada tanggal <?= $ujian['tglujian'] ?></p>
                             <a
-                                href="<?= site_url('guru/kelas/'.$value['koderuang'].'/ujian?kodeujian='.$value['kodeujian']) ?>">Masuk</a><br>
-                            <?php if($value['tglujian'] == date('Y-m-d')) : ?>
+                                href="<?= site_url('guru/kelas/'.$ujian['koderuang'].'/ujian?kodeujian='.$ujian['kodeujian']) ?>">Masuk</a><br>
+                            <?php if($ujian['tglujian'] == date('Y-m-d')) : ?>
                             <?php endif; ?>
-                            <small><?= date('d-m-Y h:i', strtotime($value['tgl'])) ?></small>
+                            <small><?= date('d-m-Y h:i', strtotime($ujian['tgl'])) ?></small>
                             <?php endif; ?>
                         </div>
-                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>

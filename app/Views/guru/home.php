@@ -32,12 +32,12 @@
                         <td><?= session()->get('alamat') ?></td>
                     </tr>
                     <tr>
-                        <td width="200">Jurusan</td>
+                        <td width="200">Mata Pelajaran</td>
                         <td width="5">:</td>
                         <td>
                             <?php
                             foreach ($mapel as $key => $value) {
-                                if ($value['idmapel'] == session()->get('mapel')) {
+                                if (session()->get('idmapel') == $value['idmapel']) {
                                     echo $value['mapel'];
                                 }
                             }
