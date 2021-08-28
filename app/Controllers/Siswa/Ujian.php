@@ -68,29 +68,40 @@ class Ujian extends BaseController
             $soal = $hasil->getResult('array');
             $total = $hasil->getNumRows();
             
-            $waktuSekarang = date("Ymdhis");
+            $waktuSekarang = date("YmdGis");
             $waktuUjian = $total * 90;
             $menit = $waktuUjian/60;
             $detik = $waktuUjian%60;
             $menitend = date("i") + $menit;
             $detikend = date("s") + $detik;
             // $waktuSekarang->add(new DateInterval('PT'.$menit.'M'.$detik.'S'));
-            $limitwaktu = date("Ymdhis", strtotime($waktuSekarang." + ".$menit." minute + ".$detik." second"));
-            $tglselesai = date("Y-m-d h:i:s", strtotime($limitwaktu));
+            $limitwaktu = date("YmdGis", strtotime($waktuSekarang." + ".$menit." minute + ".$detik." second"));
+            $tglselesai = date("Y-m-d G:i:s", strtotime($limitwaktu));
             // echo "<pre>";
-            // print_r($hasil);
-            $tambah = [
-                'nis' => session()->get('nis'),
-                'kodeujian' => $_GET['kodeujian'],
-                'tglselesai' => $tglselesai,
-            ];
-            $modelPengerjaan->insert($tambah);
+            // print_r($waktuSekarang);
+            $sudah = $modelPengerjaan->where(['nis' => session()->get('nis'), 'kodeujian' => $_GET['kodeujian']])->first();
+            if (empty($sudah)) {
+                $tambah = [
+                    'nis' => session()->get('nis'),
+                    'kodeujian' => $_GET['kodeujian'],
+                    'tglselesai' => $tglselesai,
+                ];
+                $modelPengerjaan->insert($tambah);
+                $sudah = $modelPengerjaan->where(['nis' => session()->get('nis'), 'kodeujian' => $_GET['kodeujian']])->first();
+                $tanggal = $sudah['tglselesai'];
+                // print_r('kosong');
+            } else {
+                $sudah = $modelPengerjaan->where(['nis' => session()->get('nis'), 'kodeujian' => $_GET['kodeujian']])->first();
+                $tanggal = $sudah['tglselesai'];
+                // print_r('ada');
+            }
+            
             $data = [
                 'judul' => 'Ujian',
                 'kode' => $_GET['kodeujian'],
                 'soal' => $soal,
                 'total' => $total,
-                'tglselesai' => $tglselesai,
+                'tglselesai' => $tanggal,
                 'kelas' => $kodeKelas,
                 'no' => 1,
             ];

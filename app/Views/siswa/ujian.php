@@ -75,7 +75,7 @@
                 <img src="<?= site_url('assets/images/soal/'.$value['gambar']) ?>" alt="" style="width:150px;">
                 <div class="form-group">
                     <div class="col">
-                        <input type="radio" name="soal<?= $value['idsoal'] ?>" value="A"
+                        A. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="A"
                             id="soal<?= $value['idsoal'] ?>"><?= $value['pilA'] ?>
                     </div>
                     <div class="col">
@@ -102,8 +102,12 @@
 </div>
 
 <script>
+window.onbeforeunload = function() {
+    return "Dude, are you sure you want to leave? Think of the kittens!";
+}
+
 // Mengatur waktu akhir perhitungan mundur
-var countDownDate = new Date("<?= date('M d, Y h:i:s', strtotime($tglselesai)) ?>").getTime();
+var countDownDate = new Date("<?= date('M d, Y H:i:s', strtotime($tglselesai)) ?>").getTime();
 
 // Memperbarui hitungan mundur setiap 1 detik
 var x = setInterval(function() {
@@ -115,18 +119,19 @@ var x = setInterval(function() {
     var distance = countDownDate - now;
 
     // Perhitungan waktu untuk hari, jam, menit dan detik
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     // Keluarkan hasil dalam elemen dengan id = "demo"
-    document.getElementById("demo").innerHTML = hours + "Jam " +
-        minutes + "Menit " + seconds + "Detik ";
+    document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
+        minutes + "m " + seconds + "s ";
 
     // Jika hitungan mundur selesai, tulis beberapa teks 
     if (distance < 0) {
         clearInterval(x);
-        alert("Waktu Sudah Habis!");
+        alert(countDownDate);
         document.getElementById("ujian").submit();
     }
 }, 1000);
