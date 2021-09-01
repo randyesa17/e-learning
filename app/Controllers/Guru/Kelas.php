@@ -104,7 +104,6 @@ class Kelas extends BaseController
             $jadwal = $modelJadwal->where('ruang', $kode)->findAll();
             $statusMateri="disabled";
             $statusTugas="disabled";
-            $statusUjian="";
             foreach ($jadwal as $key => $value) {
                 if ($today == $value['tgl']) {
                     if ($value['jenis'] == 'Materi' && $ruang['nip'] == session()->get('nip')) {
@@ -113,12 +112,6 @@ class Kelas extends BaseController
                         $statusTugas="";
                     }
                 }
-            }
-
-            if (!empty($ujian)) {
-                $statusUjian="disabled";
-            } else {
-                $statusUjian="";
             }
 
             $kelas = $ruang['namaruang'];
@@ -132,7 +125,6 @@ class Kelas extends BaseController
                 'ruang' => $ruang,
                 'statusMateri' => $statusMateri,
                 'statusTugas' => $statusTugas,
-                'statusUjian' => $statusUjian,
             ];
             return view('guru/ruang', $data);
         }
@@ -239,6 +231,14 @@ class Kelas extends BaseController
     {
         $model = new UjianModel();
         $modelSoal = new SoalModel();
+        $modelJadwal = new JadwalModel();
+
+        $ujian = $model->where('kodeujian', $_GET['kodeujian'])->first();
+        $modelJadwal->where([
+            'judul' => $ujian['jenis'],
+            'ruang' => $ujian['koderuang'],
+            'tgl' => $ujian['tglujian'],
+        ])->delete();
 
         $model->delete($_GET['kodeujian']);
         $modelSoal->where('kodeujian', $_GET['kodeujian'])->delete();

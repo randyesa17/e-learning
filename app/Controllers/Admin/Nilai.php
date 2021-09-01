@@ -64,8 +64,9 @@ class Nilai extends BaseController
 
             foreach ($nilai as $key => $value) {
                 $nTugas = $value['nilaiTugas'];
-                $nUjian = $value['nilaiUjian'];
-                $nAkhir = ((60/100) * $nUjian)+((40/100)*$nTugas);
+                $nUTS = $value['nilaiUTS'];
+                $nUAS = $value['nilaiUAS'];
+                $nAkhir = ((40/100) * $nUAS)+((30/100) * $nUTS)+((30/100)*$nTugas);
                 
                 $data = [
                     'nilaiAkhir' => $nAkhir,
@@ -80,8 +81,9 @@ class Nilai extends BaseController
 
             foreach ($nilai as $key => $value) {
                 $nTugas = $value['nilaiTugas'];
-                $nUjian = $value['nilaiUjian'];
-                $nAkhir = ((60/100) * $nUjian)+((40/100)*$nTugas);
+                $nUTS = $value['nilaiUTS'];
+                $nUAS = $value['nilaiUAS'];
+                $nAkhir = ((40/100) * $nUAS)+((30/100) * $nUTS)+((30/100)*$nTugas);
                 
                 $data = [
                     'nilaiAkhir' => $nAkhir,

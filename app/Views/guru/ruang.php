@@ -23,8 +23,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahTugas"
                         <?= $statusTugas ?>>Tambah
                         Tugas</button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahUjian"
-                        <?= $statusUjian ?>>Tambah
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahUjian">Tambah
                         Ujian</button>
                 </div>
             </div>
@@ -195,6 +194,15 @@
                     <input type="hidden" class="form-control" name="kode" id="kode" value="<?= $kode ?>">
                     <input type="hidden" class="form-control" name="kelas" id="kelas"
                         value="<?= $ruang['koderuang'] ?>">
+                    <div class="form-group row">
+                        <label for="jenis" class="col-sm-5 col-form-label">Jenis Ujian</label>
+                        <div class="col-sm-6">
+                            <select name="jenis" id="jenis" class="form-control">
+                                <option value="UTS">UTS</option>
+                                <option value="UAS">UAS</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label for="tgl" class="col-sm-5 col-form-label">Ujian Untuk Tanggal</label>
                         <div class="col-sm-6">

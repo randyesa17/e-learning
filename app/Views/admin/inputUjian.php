@@ -51,8 +51,10 @@
                 <div class="form-group row">
                     <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Jenis Ujian</label>
                     <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" name="jenis" id="jenis" placeholder="Jenis Ujian"
-                            required>
+                        <select name="jenis" id="jenis" class="form-control" required>
+                            <option value="UTS">UTS</option>
+                            <option value="UAS">UAS</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">

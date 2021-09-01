@@ -5,6 +5,6 @@ use CodeIgniter\Model;
 class NilaiModel extends Model
 {
     protected $table = 'nilai';
-    protected $allowedFields = ['nis', 'idmapel', 'nilaiTugas', 'nilaiUjian', 'nilaiAkhir'];
+    protected $allowedFields = ['nis', 'idmapel', 'nilaiTugas', 'nilaiUTS', 'nilaiUAS', 'nilaiAkhir'];
     protected $primaryKey = 'no';
 }

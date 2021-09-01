@@ -37,9 +37,16 @@ class Jadwal extends BaseController
 	{
 		if ($this->request->getMethod() == 'post') {
             $model = new JadwalModel();
+            $modelRuang = new RuangKelasModel();
+			$modelGuru = new GuruModel();
+
+			$ruang = $modelRuang->where('koderuang', $this->request->getPost('ruang'))->first();
+			$guru = $modelGuru->where('nip', $ruang['nip'])->first();
+			$namajadwal = "Ruang Kelas : ".$ruang['namaruang']."\n".$this->request->getPost('jenis')." ".$this->request->getPost('judul')."\n"."Guru : ".$guru['nama'];
 
             $data = [
-                'namajadwal' => $this->request->getPost('judul'),
+                'judul' => $this->request->getPost('judul'),
+                'namajadwal' => $namajadwal,
                 'ruang' => $this->request->getPost('ruang'),
                 'jenis' => $this->request->getPost('jenis'),
                 'tgl' => $this->request->getPost('tgl'),
@@ -70,9 +77,16 @@ class Jadwal extends BaseController
 	{
 		if ($this->request->getMethod() == 'post') {
             $model = new JadwalModel();
+			$modelRuang = new RuangKelasModel();
+			$modelGuru = new GuruModel();
+
+			$ruang = $modelRuang->where('koderuang', $this->request->getPost('ruang'))->first();
+			$guru = $modelGuru->where('nip', $ruang['nip'])->first();
+			$namajadwal = "Ruang Kelas : ".$ruang['namaruang']."\n".$this->request->getPost('jenis')." ".$this->request->getPost('judul')."\n"."Guru : ".$guru['nama'];
 
             $data = [
-                'namajadwal' => $this->request->getPost('judul'),
+                'judul' => $this->request->getPost('judul'),
+                'namajadwal' => $namajadwal,
                 'ruang' => $this->request->getPost('ruang'),
                 'jenis' => $this->request->getPost('jenis'),
                 'tgl' => $this->request->getPost('tgl'),
@@ -114,6 +128,7 @@ class Jadwal extends BaseController
 	public function loadData()
 	{
 		$event = new JadwalModel();
+
 		$start = $this->request->getVar('start');
 		$end = $this->request->getVar('end');
 		// on page load this ajax code block will be run

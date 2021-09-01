@@ -79,19 +79,19 @@
             <img src="<?= site_url('assets/images/soal/'.$value['gambar']) ?>" alt="" style="width:150px;">
             <div class="form-group">
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    A. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilA'] ?>
                 </div>
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    B. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilB'] ?><br>
                 </div>
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    C. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilC'] ?><br>
                 </div>
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    D. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilD'] ?><br>
                 </div>
                 <hr>
@@ -123,30 +123,29 @@
                         <div class="form-group row">
                             <label for="gambar" class="col-sm-4 col-form-label">Gambar</label>
                             <div class="col">
-                                <input type="file" class="form-control-file form-control-sm" name="gambar" id="gambar"
-                                    accept="image/*">
+                                <input type="file" class="form-control-file" name="gambar" id="gambar" accept="image/*">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="pilA" class="col-sm-4 col-form-label">Pilihan 1</label>
+                            <label for="pilA" class="col-sm-4 col-form-label">Pilihan A</label>
                             <div class="col">
                                 <input type="text" class="form-control" name="pilA" id="pilA">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="pilB" class="col-sm-4 col-form-label">Pilihan 2</label>
+                            <label for="pilB" class="col-sm-4 col-form-label">Pilihan B</label>
                             <div class="col">
                                 <input type="text" class="form-control" name="pilB" id="pilB">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="pilC" class="col-sm-4 col-form-label">Pilihan 3</label>
+                            <label for="pilC" class="col-sm-4 col-form-label">Pilihan C</label>
                             <div class="col">
                                 <input type="text" class="form-control" name="pilC" id="pilC">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="pilD" class="col-sm-4 col-form-label">Pilihan 4</label>
+                            <label for="pilD" class="col-sm-4 col-form-label">Pilihan D</label>
                             <div class="col">
                                 <input type="text" class="form-control" name="pilD" id="pilD">
                             </div>

@@ -95,11 +95,18 @@ class Kelas extends BaseController
             $tugas = $modelTugas->where('koderuang', $kodekelas)->orderBy('tgl', 'desc')->findAll();
             $ujian = $modelUjian->where('koderuang', $kodekelas)->orderBy('tgl', 'desc')->findAll();
 
-            if(!empty($modelNilai->where(['nis' => session()->get('nis'), 'idmapel' => $ruang['idmapel'], 'nilaiUjian !=' => ''])->first()))
+            if(!empty($modelNilai->where(['nis' => session()->get('nis'), 'idmapel' => $ruang['idmapel'], 'nilaiUTS !=' => ''])->first()))
             {
-                $pengerjaan = true;
+                $pengerjaanUTS = true;
             } else {
-                $pengerjaan = false;
+                $pengerjaanUTS = false;
+            }
+
+            if(!empty($modelNilai->where(['nis' => session()->get('nis'), 'idmapel' => $ruang['idmapel'], 'nilaiUAS !=' => ''])->first()))
+            {
+                $pengerjaanUAS = true;
+            } else {
+                $pengerjaanUAS = false;
             }
 
             foreach ($ujian as $key => $value) {
@@ -117,7 +124,8 @@ class Kelas extends BaseController
                 'tugas' => $tugas,
                 'ujian' => $ujian,
                 'kumpul' => $kumpul,
-                'pengerjaan' => $pengerjaan,
+                'pengerjaanUTS' => $pengerjaanUTS,
+                'pengerjaanUAS' => $pengerjaanUAS,
             ];
             return view('siswa/ruang', $data);
         }

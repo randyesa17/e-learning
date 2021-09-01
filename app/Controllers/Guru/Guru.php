@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\GuruModel;
 use App\Models\JadwalModel;
 use App\Models\MapelModel;
+use App\Models\RuangKelasModel;
 
 class Guru extends BaseController
 {
@@ -84,13 +85,37 @@ class Guru extends BaseController
     public function jadwal()
     {
         $model = new JadwalModel();
-        $jadwal = $model->orderBy('tgl', 'desc')->findAll();
+        $modelRuang = new RuangKelasModel();
+        $ruang = $modelRuang->where('nip', session()->get('nip'))->first();
+        $jadwal = $model->where('ruang', $ruang['koderuang'])->orderBy('tgl', 'desc')->findAll();
         $data = [
           'judul' => 'Jadwal Pengajaran',
           'jadwal' => $jadwal,
         ];
 
         return view('guru/jadwal', $data);
+    }
+
+    public function loadJadwal()
+    {
+        $event = new JadwalModel();
+        $modelRuang = new RuangKelasModel();
+
+        $start = $this->request->getVar('start');
+        $end = $this->request->getVar('end');
+        // on page load this ajax code block will be run
+        $data = $event->where([
+          'nip' => session()->get('nip'),
+          'tgl >=' => $start,
+          'tgl <=' => $end,
+        ])->findAll();
+        foreach ($data as $key => $value) {
+          $data[$key]['start'] = $value['tgl'];
+          $data[$key]['end'] = $value['tgl'];
+          $data[$key]['title'] = $value['namajadwal'];
+        }
+
+        return json_encode($data);
     }
 
     public function logout()

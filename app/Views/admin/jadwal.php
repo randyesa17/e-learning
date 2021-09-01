@@ -36,7 +36,7 @@
                     foreach ($jadwal as $key => $value) : ?>
                     <tr>
                         <td><?= $no++ ?></td>
-                        <td><?= $value['namajadwal'] ?></td>
+                        <td><?= $value['judul'] ?></td>
                         <td><?= $value['ruang'] ?></td>
                         <td>
                             <?php

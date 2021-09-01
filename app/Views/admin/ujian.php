@@ -74,7 +74,7 @@
                                 ?>
                         </td>
                         <td><?= $value['jenis'] ?></td>
-                        <td><?= date('d-m-Y', strtotime($value['tgl'])) ?></td>
+                        <td><?= date('d-m-Y', strtotime($value['tglujian'])) ?></td>
                         <td>
                             <a class="btn btn-sm btn-info"
                                 href="<?= site_url('admin/soal/' . $value['kodeujian']) ?>">Soal</a>

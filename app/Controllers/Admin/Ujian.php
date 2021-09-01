@@ -9,6 +9,8 @@ use App\Models\SoalModel;
 use App\Models\RuangKelasModel;
 use App\Models\MapelModel;
 use App\Models\KelasModel;
+use App\Models\JadwalModel;
+use App\Models\GuruModel;
 
 class Ujian extends BaseController
 {
@@ -39,6 +41,9 @@ class Ujian extends BaseController
     {
         if ($this->request->getMethod() == 'post') {
             $model = new UjianModel();
+            $modelRuang = new RuangKelasModel();
+            $modelJadwal = new JadwalModel();
+            $modelGuru = new GuruModel();
             helper('text');
 
             $kode = random_string('alpha', 10);
@@ -47,15 +52,24 @@ class Ujian extends BaseController
                 'kodeujian' => $kode,
                 'koderuang' => $this->request->getPost('ruang'),
                 'jenis' => $this->request->getPost('jenis'),
-                'tgl' => $this->request->getPost('tgl'),
+                'tglujian' => $this->request->getPost('tgl'),
             ];
 
-            $rules = [
-                'koderuang' => 'is_unique[ujian.koderuang]'
-            ];
-            $model->setValidationRules($rules);
             $model->insert($data);
             if (!$model->errors()) {
+                $ruang = $modelRuang->where('koderuang', $this->request->getPost('ruang'))->first();
+                $guru = $modelGuru->where('nip', $ruang['nip'])->first();
+                $namajadwal = "Ruang Kelas : ".$ruang['namaruang']."\n".$this->request->getPost('jenis')."\n"."Guru : ".$guru['nama'];
+
+                $dataJadwal = [
+                    'judul' => $this->request->getPost('jenis'),
+                    'namajadwal' => $namajadwal,
+                    'ruang' => $this->request->getPost('ruang'),
+                    'nip' => $guru['nip'],
+                    'jenis' => 'Ujian',
+                    'tgl' => $this->request->getPost('tgl'),
+                ];
+                $modelJadwal->insert($dataJadwal);
                 return redirect()->to(site_url('admin/ujian'));
             } else {
                 $error = $model->errors();
@@ -79,6 +93,14 @@ class Ujian extends BaseController
     {
         $model = new UjianModel();
         $modelSoal = new SoalModel();
+        $modelJadwal = new JadwalModel();
+
+        $ujian = $model->where('kodeujian', $id)->first();
+        $modelJadwal->where([
+            'judul' => $ujian['jenis'],
+            'ruang' => $ujian['koderuang'],
+            'tgl' => $ujian['tglujian'],
+        ])->delete();
         $model->delete($id);
         $modelSoal->where('kodeujian', $id)->delete();
 
@@ -89,17 +111,30 @@ class Ujian extends BaseController
     {
         $modelSoal = new SoalModel();
         if ($this->request->getMethod() == 'post') {
+
+            $file = $this->request->getFile('gambar');
+            $name = $file->getName();
+            if (!empty($name)) {
+                $name = $file->getRandomName();
+            }
+
             $data = [
                 'kodeujian' => $kode,
                 'soal' => $this->request->getPost('soal'),
+                'gambar' => $name,
                 'pilA' => $this->request->getPost('pilA'),
                 'pilB' => $this->request->getPost('pilB'),
                 'pilC' => $this->request->getPost('pilC'),
                 'pilD' => $this->request->getPost('pilD'),
                 'kunci' => $this->request->getPost('kunci'),
             ];
+            $filee = $this->request->getFile('gambar');
+            echo "<pre>";
+            print_r($data);
             $modelSoal->insert($data);
             if (!$modelSoal->errors()) {
+                if(!empty($name))
+                    $file->move('./assets/images/soal/', $name);
                 return redirect()->to(site_url('admin/soal/' . $kode));
             } else {
                 $error = $modelSoal->errors();

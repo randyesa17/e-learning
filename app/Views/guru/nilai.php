@@ -11,7 +11,7 @@
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= site_url('guru') ?>">Beranda</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Kumpulan Tugas</li>
+                            <li class="breadcrumb-item active" aria-current="page">Kumpulan Nilai</li>
                         </ol>
                     </nav>
                 </div>
@@ -34,9 +34,10 @@
                     <tr class="text-center">
                         <th width="5%">No</th>
                         <th width="20%">NIS</th>
-                        <th colspan="2" width="25%">Nilai Tugas</th>
-                        <th width="25%">Nilai Ujian</th>
-                        <th colspan="2" width="25%">Nilai Akhir</th>
+                        <th colspan="2" width="20%">Nilai Tugas</th>
+                        <th width="20%">Nilai UTS</th>
+                        <th width="20%">Nilai UAS</th>
+                        <th colspan="2" width="20%">Nilai Akhir</th>
                     </tr>
                     <?php if (!empty($nilai)) : ?>
                     <?php $no = 1; foreach($nilai as $key => $value) : ?>
@@ -83,8 +84,14 @@
                         </div>
                         <?php endif; ?>
 
-                        <?php if ($value['nilaiUjian'] != "") : ?>
-                        <td><?= $value['nilaiUjian'] ?></td>
+                        <?php if ($value['nilaiUTS'] != "") : ?>
+                        <td><?= $value['nilaiUTS'] ?></td>
+                        <?php else : ?>
+                        <td>Belum Ada</td>
+                        <?php endif; ?>
+
+                        <?php if ($value['nilaiUAS'] != "") : ?>
+                        <td><?= $value['nilaiUAS'] ?></td>
                         <?php else : ?>
                         <td>Belum Ada</td>
                         <?php endif; ?>

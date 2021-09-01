@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class JadwalModel extends Model
 {
     protected $table = 'jadwal';
-    protected $allowedFields = ['namajadwal', 'ruang', 'jenis', 'tgl'];
+    protected $allowedFields = ['judul', 'namajadwal', 'ruang', 'nip', 'jenis', 'tgl'];
     protected $primaryKey = 'idjadwal';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;

@@ -28,23 +28,24 @@
             <a class="btn btn-primary pull-right"
                 href="<?= site_url('admin/soal/edit/' . $kode . '?idsoal=' . $value['idsoal']) ?>">Edit</a>
             <a class="btn btn-danger pull-right"
-                href="<?= site_url('admin/soal/hapus/' . $kode . '?idsoal=' . $value['idsoal']) ?>">Edit</a>
+                href="<?= site_url('admin/soal/hapus/' . $kode . '?idsoal=' . $value['idsoal']) ?>">Hapus</a>
             <p><?php echo $no . ". " . $value['soal']; ?></p>
+            <img src="<?= site_url('assets/images/soal/'.$value['gambar']) ?>" alt="" style="width:150px;">
             <div class="form-group">
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    A. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilA'] ?>
                 </div>
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    B. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilB'] ?><br>
                 </div>
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    C. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilC'] ?><br>
                 </div>
                 <div class="col">
-                    <input type="radio" name="soal<?= $value['idsoal'] ?>"
+                    D. <input type="radio" name="soal<?= $value['idsoal'] ?>"
                         id="soal<?= $value['idsoal'] ?>"><?= $value['pilD'] ?><br>
                 </div>
                 <hr>
@@ -60,7 +61,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Tugas</h4>
+                    <h4 class="modal-title">Tambah Soal</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -75,8 +76,7 @@
                         <div class="form-group row">
                             <label for="gambar" class="col-sm-4 col-form-label">Gambar</label>
                             <div class="col">
-                                <input type="file" class="form-control-file form-control-sm" name="gambar" id="gambar"
-                                    accept="image/*">
+                                <input type="file" class="form-control-file" name="gambar" id="gambar" accept="image/*">
                             </div>
                         </div>
                         <div class="form-group row">

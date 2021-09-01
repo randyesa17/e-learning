@@ -50,7 +50,11 @@
                                 </select>
                             </div>
                             <div class="col-2">
-                                <input type="text" class="form-control" name="jurusan" id="jurusan" required>
+                                <select class="form-control" name="jurusan" id="jurusan" required>
+                                    <option value="MIPA">MIPA</option>
+                                    <option value="IPS">IPS</option>
+                                    <option value="Bahasa">Bahasa</option>
+                                </select>
                             </div>
                             <div class="col-2">
                                 <input type="text" class="form-control" name="ruang" id="ruang" required>

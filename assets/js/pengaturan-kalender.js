@@ -16,7 +16,7 @@ $(document).ready(function () {
         ],
         // events: site_url + "/jadwal/isi",
         displayEventTime: false,
-        editable: true,
+        editable: false,
         eventRender: function (event, element, view) {
             if (event.allDay === 'true') {
                 event.allDay = true;

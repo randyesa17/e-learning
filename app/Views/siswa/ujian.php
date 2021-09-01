@@ -79,15 +79,15 @@
                             id="soal<?= $value['idsoal'] ?>"><?= $value['pilA'] ?>
                     </div>
                     <div class="col">
-                        <input type="radio" name="soal<?= $value['idsoal'] ?>" value="B"
+                        B. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="B"
                             id="soal<?= $value['idsoal'] ?>"><?= $value['pilB'] ?><br>
                     </div>
                     <div class="col">
-                        <input type="radio" name="soal<?= $value['idsoal'] ?>" value="C"
+                        C. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="C"
                             id="soal<?= $value['idsoal'] ?>"><?= $value['pilC'] ?><br>
                     </div>
                     <div class="col">
-                        <input type="radio" name="soal<?= $value['idsoal'] ?>" value="D"
+                        D. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="D"
                             id="soal<?= $value['idsoal'] ?>"><?= $value['pilD'] ?><br>
                     </div>
                     <hr>
@@ -102,38 +102,38 @@
 </div>
 
 <script>
-window.onbeforeunload = function() {
-    return "Dude, are you sure you want to leave? Think of the kittens!";
-}
+// window.onbeforeunload = function() {
+//     return "Dude, are you sure you want to leave? Think of the kittens!";
+// }
 
-// Mengatur waktu akhir perhitungan mundur
-var countDownDate = new Date("<?= date('M d, Y H:i:s', strtotime($tglselesai)) ?>").getTime();
+// // Mengatur waktu akhir perhitungan mundur
+// var countDownDate = new Date("<?= date('M d, Y H:i:s', strtotime($tglselesai)) ?>").getTime();
 
-// Memperbarui hitungan mundur setiap 1 detik
-var x = setInterval(function() {
+// // Memperbarui hitungan mundur setiap 1 detik
+// var x = setInterval(function() {
 
-    // Untuk mendapatkan tanggal dan waktu hari ini
-    var now = new Date().getTime();
+//     // Untuk mendapatkan tanggal dan waktu hari ini
+//     var now = new Date().getTime();
 
-    // Temukan jarak antara sekarang dan tanggal hitung mundur
-    var distance = countDownDate - now;
+//     // Temukan jarak antara sekarang dan tanggal hitung mundur
+//     var distance = countDownDate - now;
 
-    // Perhitungan waktu untuk hari, jam, menit dan detik
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+//     // Perhitungan waktu untuk hari, jam, menit dan detik
+//     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+//     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+//     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Keluarkan hasil dalam elemen dengan id = "demo"
-    document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
-        minutes + "m " + seconds + "s ";
+//     // Keluarkan hasil dalam elemen dengan id = "demo"
+//     document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
+//         minutes + "m " + seconds + "s ";
 
-    // Jika hitungan mundur selesai, tulis beberapa teks 
-    if (distance < 0) {
-        clearInterval(x);
-        alert(countDownDate);
-        document.getElementById("ujian").submit();
-    }
-}, 1000);
+//     // Jika hitungan mundur selesai, tulis beberapa teks 
+//     if (distance < 0) {
+//         clearInterval(x);
+//         alert(countDownDate);
+//         document.getElementById("ujian").submit();
+//     }
+// }, 1000);
 </script>
 <?= $this->endSection() ?>

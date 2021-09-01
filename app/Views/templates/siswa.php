@@ -127,7 +127,6 @@
     <script src="<?= site_url('assets/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js') ?>"></script>
     <script src="<?= site_url('assets/deskapp/vendors/scripts/dashboard.js') ?>"></script>
     <script src="<?= site_url('assets/deskapp/src/plugins/fullcalendar/fullcalendar.min.js') ?>"></script>
-    <!-- <script src="<?= site_url('assets/deskapp/vendors/scripts/calendar-setting.js') ?>"></script> -->
     <script src="<?= site_url('assets/js/pengaturan-kalender.js') ?>"></script>
 </body>
 

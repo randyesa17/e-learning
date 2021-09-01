@@ -24,7 +24,8 @@
                         <th>No</th>
                         <th>Mata Pelajaran</th>
                         <th>Nilai Tugas</th>
-                        <th>Nilai Ujian</th>
+                        <th>Nilai UTS</th>
+                        <th>Nilai UAS</th>
                         <th>Nilai Akhir</th>
                     </tr>
                     <?php $no = 1; foreach($nilai as $key => $value) : ?>
@@ -50,8 +51,17 @@
                         </td>
                         <td>
                             <?php
-                                if ($value['nilaiUjian'] != "") {
-                                    echo $value['nilaiUjian'];
+                                if ($value['nilaiUTS'] != "") {
+                                    echo $value['nilaiUTS'];
+                                } else {
+                                    echo "Belum Ada";
+                                }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                if ($value['nilaiUAS'] != "") {
+                                    echo $value['nilaiUAS'];
                                 } else {
                                     echo "Belum Ada";
                                 }

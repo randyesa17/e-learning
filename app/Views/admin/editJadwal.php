@@ -40,13 +40,6 @@
             <form action="<?= site_url('admin/jadwal/edit/'.$jadwal['idjadwal']) ?>" method="post"
                 enctype="multipart/form-data">
                 <div class="form-group row">
-                    <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Judul Jadwal</label>
-                    <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" name="judul" id="judul"
-                            value="<?= $jadwal['namajadwal'] ?>" required>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="ruang" class="col-sm-12 col-md-2 col-form-label">Ruang Kelas</label>
                     <div class="col-sm-12 col-md-10">
                         <select class="form-control custom-select2" name="ruang" id="ruang">
@@ -59,20 +52,25 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Jenis Ujian</label>
+                    <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Jenis Jadwal</label>
                     <div class="col-sm-12 col-md-10">
                         <select class="form-control custom-select2" name="jenis" id="jenis">
                             <option value="Materi" <?php if($jadwal['jenis'] == "Materi") echo "selected"; ?>>Materi
                             </option>
                             <option value="Tugas" <?php if($jadwal['jenis'] == "Tugas") echo "selected"; ?>>Tugas
                             </option>
-                            <option value="Ujian" <?php if($jadwal['jenis'] == "Ujian") echo "selected"; ?>>Ujian
-                            </option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="tgl" class="col-sm-12 col-md-2 col-form-label">Tanggal Ujian</label>
+                    <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Judul Jadwal</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input type="text" class="form-control" name="judul" id="judul" value="<?= $jadwal['judul'] ?>"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tgl" class="col-sm-12 col-md-2 col-form-label">Tanggal Jadwal</label>
                     <div class="col-sm-12 col-md-10">
                         <input type="date" class="form-control" name="tgl" id="tgl" value="<?= $jadwal['tgl'] ?>"
                             min="<?php echo date("Y-m-d"); ?>" required>

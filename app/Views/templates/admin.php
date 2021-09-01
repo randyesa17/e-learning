@@ -115,6 +115,11 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
+                        <a href="<?= site_url('admin/ruang') ?>" class="dropdown-toggle no-arrow">
+                            <span class="micon dw dw-mortarboard"></span><span class="mtext">Ruang Kelas</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= site_url('admin/ujian') ?>" class="dropdown-toggle no-arrow">
                             <span class="micon dw dw-edit-file"></span><span class="mtext">Ujian</span>
                         </a>

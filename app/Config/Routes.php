@@ -64,6 +64,7 @@ $routes->group('admin', function ($routes) {
 	$routes->add('soal/hapus/(:any)', 'Admin\Ujian::hapussoal/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('soal/(:any)', 'Admin\Ujian::soal/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal', 'Admin\Jadwal::index', ['filter' => 'AuthAdmin']);
+	$routes->add('ruang', 'Admin\Ruang::index', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal/input', 'Admin\Jadwal::input', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal/edit/(:any)', 'Admin\Jadwal::edit/$1', ['filter' => 'AuthAdmin']);
 	$routes->add('jadwal/hapus/(:any)', 'Admin\Jadwal::hapus/$1', ['filter' => 'AuthAdmin']);
@@ -95,6 +96,7 @@ $routes->group('guru', function ($routes) {
 	$routes->add('nilai', 'Guru\Nilai::index', ['filter' => 'AuthGuru']);
 	$routes->add('nilai/tugas', 'Guru\Nilai::tugas', ['filter' => 'AuthGuru']);
 	$routes->add('jadwal', 'Guru\Guru::jadwal', ['filter' => 'AuthGuru']);
+	$routes->add('jadwal/isi', 'Guru\Guru::loadJadwal');
 	$routes->add('logout', 'Guru\Guru::logout', ['filter' => 'AuthGuru']);
 });
 
@@ -103,6 +105,7 @@ $routes->group('siswa', function ($routes) {
 	$routes->add('/', 'Siswa\Siswa::index', ['filter' => 'AuthSiswa']);
 	$routes->add('kelas', 'Siswa\Kelas::index', ['filter' => 'AuthSiswa']);
 	$routes->add('jadwal', 'Siswa\Siswa::jadwal', ['filter' => 'AuthSiswa']);
+	$routes->add('jadwal/isi', 'Siswa\Siswa::loadJadwal');
 	$routes->add('kelas/tambah', 'Siswa\Kelas::tambah', ['filter' => 'AuthSiswa']);
 	$routes->add('kelas/(:any)/tugas', 'Siswa\Kelas::tugas/$1', ['filter' => 'AuthGuru']);
 	$routes->add('kelas/(:any)/ujian', 'Siswa\Ujian::index/$1', ['filter' => 'AuthGuru']);

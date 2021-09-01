@@ -36,12 +36,21 @@ class Ujian extends BaseController
 
             $model = new NilaiModel();
             $modelRuang = new RuangKelasModel();
+            $modelUjian = new UjianModel();
             $mapel = $modelRuang->where('koderuang', $kodeKelas)->first();
             $Arrnilai = $model->where('idmapel', $mapel['idmapel'])->first();
             if (!empty($Arrnilai)) {
-                $data = [
-                    'nilaiUjian' => $nilai,
-                ];
+                $ujian = $modelUjian->where('kodeujian', $kode)->first();
+                if ($ujian['jenis'] == 'UTS') {
+                    $data = [
+                        'nilaiUTS' => $nilai,
+                    ];
+                } else {
+                    $data = [
+                        'nilaiUAS' => $nilai,
+                    ];
+                }
+                
                 $model->update($Arrnilai['no'], $data);
             } else {
                 $data = [

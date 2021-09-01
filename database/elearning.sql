@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `username` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`idadmin`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `guru` (
   `foto` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`nip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -75,10 +75,10 @@ CREATE TABLE IF NOT EXISTS `jadwal` (
   `idjadwal` int NOT NULL AUTO_INCREMENT,
   `namajadwal` varchar(100) NOT NULL,
   `ruang` varchar(10) NOT NULL,
-  `jenis` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `jenis` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `tgl` date NOT NULL,
   PRIMARY KEY (`idjadwal`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -89,9 +89,9 @@ CREATE TABLE IF NOT EXISTS `jadwal` (
 DROP TABLE IF EXISTS `kelas`;
 CREATE TABLE IF NOT EXISTS `kelas` (
   `idkelas` int NOT NULL AUTO_INCREMENT,
-  `kelas` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `kelas` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`idkelas`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `kumpulantugas` (
   `nis` varchar(15) NOT NULL,
   `file` varchar(255) NOT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `mapel` (
   `idmapel` int NOT NULL AUTO_INCREMENT,
   `mapel` varchar(100) NOT NULL,
   PRIMARY KEY (`idmapel`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -132,12 +132,12 @@ DROP TABLE IF EXISTS `materi`;
 CREATE TABLE IF NOT EXISTS `materi` (
   `idmateri` varchar(20) NOT NULL,
   `tema` varchar(255) NOT NULL,
-  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `tipe` varchar(50) NOT NULL,
   `file` varchar(255) NOT NULL,
   `tgl` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idmateri`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `nilai` (
   `nilaiUjian` int DEFAULT NULL,
   `nilaiAkhir` int DEFAULT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `pengerjaanujian` (
   `tglselesai` datetime NOT NULL,
   `nilai` int DEFAULT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `pengerjaanujian` (
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
   `idpost` int NOT NULL AUTO_INCREMENT,
-  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `idmateri` varchar(20) DEFAULT NULL,
   `tema` varchar(255) DEFAULT NULL,
   `tipe` varchar(50) DEFAULT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `tglujian` date DEFAULT NULL,
   `tgl` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idpost`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -204,14 +204,14 @@ CREATE TABLE IF NOT EXISTS `posts` (
 DROP TABLE IF EXISTS `ruangkelas`;
 CREATE TABLE IF NOT EXISTS `ruangkelas` (
   `no` int NOT NULL AUTO_INCREMENT,
-  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `namaruang` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `namaruang` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `idmapel` int NOT NULL,
   `idkelas` int NOT NULL,
   `nip` varchar(50) NOT NULL,
-  `nis` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `nis` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `siswa` (
   `foto` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`nis`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -252,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `soal` (
   `pilD` varchar(255) NOT NULL,
   `kunci` varchar(5) NOT NULL,
   PRIMARY KEY (`idsoal`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -263,11 +263,11 @@ CREATE TABLE IF NOT EXISTS `soal` (
 DROP TABLE IF EXISTS `tugas`;
 CREATE TABLE IF NOT EXISTS `tugas` (
   `kodetugas` varchar(20) NOT NULL,
-  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `perintah` varchar(200) NOT NULL,
   `tgl` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`kodetugas`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -278,12 +278,12 @@ CREATE TABLE IF NOT EXISTS `tugas` (
 DROP TABLE IF EXISTS `ujian`;
 CREATE TABLE IF NOT EXISTS `ujian` (
   `kodeujian` varchar(10) NOT NULL,
-  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `koderuang` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `jenis` varchar(100) NOT NULL,
   `tglujian` date NOT NULL,
   `tgl` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`kodeujian`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

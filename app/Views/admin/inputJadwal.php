@@ -11,7 +11,7 @@
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= site_url('admin/home') ?>">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="<?= site_url('admin/ujian') ?>">Jadwal</a></li>
+                            <li class="breadcrumb-item"><a href="<?= site_url('admin/jadwal') ?>">Jadwal</a></li>
                             <li class="breadcrumb-item active" aria-current="page"><?= $judul ?></li>
                         </ol>
                     </nav>
@@ -39,13 +39,6 @@
             </div>
             <form action="<?= site_url('admin/jadwal/input') ?>" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
-                    <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Judul Jadwal</label>
-                    <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" name="judul" id="judul" placeholder="Judul Jadwal"
-                            required>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="ruang" class="col-sm-12 col-md-2 col-form-label">Ruang Kelas</label>
                     <div class="col-sm-12 col-md-10">
                         <select class="form-control custom-select2" name="ruang" id="ruang">
@@ -56,17 +49,23 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Jenis Ujian</label>
+                    <label for="jenis" class="col-sm-12 col-md-2 col-form-label">Jenis Jadwal</label>
                     <div class="col-sm-12 col-md-10">
                         <select class="form-control custom-select2" name="jenis" id="jenis">
                             <option value="Materi">Materi</option>
                             <option value="Tugas">Tugas</option>
-                            <option value="Ujian">Ujian</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="tgl" class="col-sm-12 col-md-2 col-form-label">Tanggal Ujian</label>
+                    <label for="judul" class="col-sm-12 col-md-2 col-form-label">Judul Jadwal</label>
+                    <div class="col-sm-12 col-md-10">
+                        <input type="text" class="form-control" name="judul" id="judul" placeholder="Judul Jadwal"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="tgl" class="col-sm-12 col-md-2 col-form-label">Tanggal Jadwal</label>
                     <div class="col-sm-12 col-md-10">
                         <input type="date" class="form-control" name="tgl" id="tgl" placeholder="Tanggal Ujian"
                             min="<?php echo date("Y-m-d"); ?>" required>

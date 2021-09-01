@@ -8,6 +8,7 @@ use App\Models\NilaiModel;
 use App\Models\KelasModel;
 use App\Models\JadwalModel;
 use App\Models\MapelModel;
+use App\Models\RuangKelasModel;
 
 class Siswa extends BaseController
 {
@@ -72,13 +73,44 @@ class Siswa extends BaseController
     public function jadwal()
     {
         $model = new JadwalModel();
-        $jadwal = $model->orderBy('tgl', 'desc')->findAll();
+        $modelRuang = new RuangKelasModel();
+
+        $ruang = $modelRuang->where('nis', session()->get('nis'))->findAll();
+        $jadwal = $model->findAll();
+        
+        
         $data = [
           'judul' => 'Jadwal Pelajaran',
           'jadwal' => $jadwal,
         ];
 
         return view('siswa/jadwal', $data);
+    }
+
+    public function loadJadwal()
+    {
+        $event = new JadwalModel();
+        $modelRuang = new RuangKelasModel();
+
+        $start = $this->request->getVar('start');
+        $end = $this->request->getVar('end');
+        $ruang = $modelRuang->where('nis', session()->get('nis'))->findAll();
+        // on page load this ajax code block will be run
+        $data = $event->where([
+            'tgl >=' => $start,
+            'tgl <=' => $end,
+        ])->findAll();
+        foreach ($data as $key => $value) {
+            foreach ($ruang as $keyR => $valueR) {
+                if ($value['ruang'] == $valueR['koderuang']) {
+                    $data[$key]['start'] = $value['tgl'];
+                    $data[$key]['end'] = $value['tgl'];
+                    $data[$key]['title'] = $value['namajadwal'];
+                }
+            }
+        }
+
+        return json_encode($data);
     }
 
     public function nilai()

@@ -40,6 +40,6 @@
     </div>
 </div>
 <script>
-var site_url = "<?= site_url('admin') ?>";
+var site_url = "<?= site_url('guru') ?>";
 </script>
 <?= $this->endSection() ?>

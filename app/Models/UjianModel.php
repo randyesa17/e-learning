@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class UjianModel extends Model
 {
     protected $table = 'ujian';
-    protected $allowedFields = ['kodeujian', 'koderuang', 'jenis', 'tgl'];
+    protected $allowedFields = ['kodeujian', 'koderuang', 'jenis', 'tglujian', 'tgl'];
     protected $primaryKey = 'kodeujian';
     protected $validationMessages = [
         'koderuang' => [
