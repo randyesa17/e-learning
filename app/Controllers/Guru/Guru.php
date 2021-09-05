@@ -60,6 +60,7 @@ class Guru extends BaseController
           'kelamin' => $guru['kelamin'],
           'alamat' => $guru['alamat'],
           'idmapel' => $guru['idmapel'],
+          'jabatan' => $guru['jabatan'],
           'foto' => $guru['foto'],
           'password' => $guru['password'],
           'loggedIn' => true

@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class GuruModel extends Model
 {
     protected $table = 'guru';
-    protected $allowedFields = ['nip', 'nama', 'tempatLahir', 'tglLahir', 'kelamin', 'alamat', 'idmapel', 'foto', 'password'];
+    protected $allowedFields = ['nip', 'nama', 'tempatLahir', 'tglLahir', 'kelamin', 'alamat', 'idmapel', 'jabatan', 'foto', 'password'];
     protected $primaryKey = 'nip';
     protected $validationMessages = [
         'nip' => [

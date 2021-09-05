@@ -364,6 +364,7 @@ class Admin extends BaseController
                 'kelamin' => $kelamin,
                 'alamat' => $this->request->getPost('alamat'),
                 'idmapel' => $this->request->getPost('mapel'),
+                'jabatan' => $this->request->getPost('jabatan'),
                 'foto' => $name,
                 'password' => random_string('alnum', 6),
             ];
@@ -417,6 +418,7 @@ class Admin extends BaseController
                 'kelamin' => $kelamin,
                 'alamat' => $this->request->getPost('alamat'),
                 'idmapel' => $this->request->getPost('mapel'),
+                'jabatan' => $this->request->getPost('jabatan'),
                 'foto' => $name,
             ];
 

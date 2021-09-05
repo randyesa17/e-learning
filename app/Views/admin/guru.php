@@ -31,6 +31,7 @@
                         <th>Jenis Kelamin</th>
                         <th>Alamat</th>
                         <th>Mata Pelajaran</th>
+                        <th>Jabatan</th>
                         <th>Foto</th>
                         <th>Password</th>
                         <th colspan="2" width="5%">Aksi</th>
@@ -53,6 +54,7 @@
                                 }
                                 ?>
                         </td>
+                        <td><?= $value['jabatan'] ?></td>
                         <td><img id="foto" name="foto" src="<?= site_url('assets/images/guru/' . $value['foto']) ?>"
                                 width="50px">
                         </td>

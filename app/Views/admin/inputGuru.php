@@ -91,6 +91,16 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="jabatan" class="col-sm-12 col-md-2 col-form-label">Jabatan</label>
+                    <div class="col-sm-12 col-md-10">
+                        <select class="form-control" name="jabatan" id="jabatan">
+                            <option value="-1">--Pilih Jabatan--</option>
+                            <option value="Wali Kelas">Wali Kelas</option>
+                            <option value="Guru Mata Pelajaran">Guru Mata Pelajaran</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="foto" class="col-sm-12 col-md-2 col-form-label">Foto</label>
                     <div class="col-sm-12 col-md-10">
                         <input type="file" class="form-control" name="foto" id="foto" accept="image/*" required>
