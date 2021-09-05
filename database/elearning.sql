@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 01, 2021 at 10:58 AM
+-- Generation Time: Sep 05, 2021 at 01:30 PM
 -- Server version: 8.0.22
 -- PHP Version: 7.4.14
 
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `pengerjaanujian` (
   `tglselesai` datetime NOT NULL,
   `nilai` int DEFAULT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 

@@ -76,19 +76,23 @@
                 <div class="form-group">
                     <div class="col">
                         A. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="A"
-                            id="soal<?= $value['idsoal'] ?>"><?= $value['pilA'] ?>
+                            id="soal<?= $value['idsoal'] ?>A"
+                            onclick="jawab<?= $value['idsoal'] ?>(value)"><?= $value['pilA'] ?>
                     </div>
                     <div class="col">
                         B. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="B"
-                            id="soal<?= $value['idsoal'] ?>"><?= $value['pilB'] ?><br>
+                            id="soal<?= $value['idsoal'] ?>B"
+                            onclick="jawab<?= $value['idsoal'] ?>(value)"><?= $value['pilB'] ?><br>
                     </div>
                     <div class="col">
                         C. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="C"
-                            id="soal<?= $value['idsoal'] ?>"><?= $value['pilC'] ?><br>
+                            id="soal<?= $value['idsoal'] ?>C"
+                            onclick="jawab<?= $value['idsoal'] ?>(value)"><?= $value['pilC'] ?><br>
                     </div>
                     <div class="col">
                         D. <input type="radio" name="soal<?= $value['idsoal'] ?>" value="D"
-                            id="soal<?= $value['idsoal'] ?>"><?= $value['pilD'] ?><br>
+                            id="soal<?= $value['idsoal'] ?>D"
+                            onclick="jawab<?= $value['idsoal'] ?>(value)"><?= $value['pilD'] ?><br>
                     </div>
                     <hr>
                 </div>
@@ -100,40 +104,60 @@
         </div>
     </div>
 </div>
-
 <script>
-// window.onbeforeunload = function() {
-//     return "Dude, are you sure you want to leave? Think of the kittens!";
-// }
+<?php foreach ($soal as $key => $value) : ?>
 
-// // Mengatur waktu akhir perhitungan mundur
-// var countDownDate = new Date("<?= date('M d, Y H:i:s', strtotime($tglselesai)) ?>").getTime();
+if (typeof localStorage.getItem("soal<?= $value['idsoal'] ?>") !== 'undefined' &&
+    localStorage.getItem("soal<?= $value['idsoal'] ?>") != null) {
+    if (localStorage.getItem("soal<?= $value['idsoal'] ?>") === 'A') {
+        document.getElementById("soal<?= $value['idsoal'] ?>A").checked = true;
+    } else if (localStorage.getItem("soal<?= $value['idsoal'] ?>") === 'B') {
+        document.getElementById("soal<?= $value['idsoal'] ?>B").checked = true;
+    } else if (localStorage.getItem("soal<?= $value['idsoal'] ?>") === 'C') {
+        document.getElementById("soal<?= $value['idsoal'] ?>C").checked = true;
+    } else if (localStorage.getItem("soal<?= $value['idsoal'] ?>") === 'D') {
+        document.getElementById("soal<?= $value['idsoal'] ?>D").checked = true;
+    }
+}
 
-// // Memperbarui hitungan mundur setiap 1 detik
-// var x = setInterval(function() {
+function jawab<?= $value['idsoal'] ?>(element) {
+    var jawaban<?= $value['idsoal'] ?> = element;
+    localStorage.setItem("soal<?= $value['idsoal'] ?>", jawaban<?= $value['idsoal'] ?>);
+}
 
-//     // Untuk mendapatkan tanggal dan waktu hari ini
-//     var now = new Date().getTime();
+<?php endforeach;?>
+window.onbeforeunload = function() {
+    return "Anda Yakin Mau Keluar?!!";
+}
 
-//     // Temukan jarak antara sekarang dan tanggal hitung mundur
-//     var distance = countDownDate - now;
+// Mengatur waktu akhir perhitungan mundur
+var countDownDate = new Date("<?= date('M d, Y H:i:s', strtotime($tglselesai)) ?>").getTime();
 
-//     // Perhitungan waktu untuk hari, jam, menit dan detik
-//     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-//     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-//     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-//     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+// Memperbarui hitungan mundur setiap 1 detik
+var x = setInterval(function() {
 
-//     // Keluarkan hasil dalam elemen dengan id = "demo"
-//     document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
-//         minutes + "m " + seconds + "s ";
+    // Untuk mendapatkan tanggal dan waktu hari ini
+    var now = new Date().getTime();
 
-//     // Jika hitungan mundur selesai, tulis beberapa teks 
-//     if (distance < 0) {
-//         clearInterval(x);
-//         alert(countDownDate);
-//         document.getElementById("ujian").submit();
-//     }
-// }, 1000);
+    // Temukan jarak antara sekarang dan tanggal hitung mundur
+    var distance = countDownDate - now;
+
+    // Perhitungan waktu untuk hari, jam, menit dan detik
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Keluarkan hasil dalam elemen dengan id = "demo"
+    document.getElementById("demo").innerHTML = hours + "Jam " +
+        minutes + "Menit " + seconds + "Detik ";
+
+    // Jika hitungan mundur selesai, tulis beberapa teks
+    if (distance <
+        0) {
+        clearInterval(x);
+        alert("Waktu Sudah Habis");
+        document.getElementById("ujian").submit();
+    }
+}, 1000);
 </script>
 <?= $this->endSection() ?>
